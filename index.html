@@ -303,6 +303,8 @@ function sendChat(dirId,pIdx){
   p[pIdx].chat.push({who:who,did:CU.d,txt:txt,ts:Date.now()});
   savePends(dirId,p);
   inp.value="";
+  // Notify director if DG is sending
+  if(CU.r==="dg") notifyDGComment(dirId, p[pIdx].txt);
   showToast("Mensaje enviado");
 }
 
@@ -480,10 +482,43 @@ function asig(did){
   if(!txt){showToast("Escribe la descripcion");return;}
   var pri=document.getElementById("apr"+did).value,dia=parseInt(document.getElementById("adia"+did).value);
   var p=getPends(did);p.push({txt:txt,est:"pendiente",prio:pri,pct:0,nota:"",fecha:"",colabs:[],dia:dia,chat:[],assignedByDG:true});
-  savePends(did,p);openAK=null;showToast("Tarea asignada");
+  savePends(did,p);openAK=null;notifyAssigned(did,txt);showToast("Tarea asignada");
 }
 function dgDel(did,idx){if(!confirm("Eliminar?"))return;var p=getPends(did);p.splice(idx,1);savePends(did,p);}
 function getDirName(id){for(var i=0;i<DM.length;i++){if(DM[i].id===id)return DM[i].n;}return "Dir";}
+
+
+// CALLMEBOT WHATSAPP NOTIFICATIONS
+var DIRECTOR_WA = {
+  1: {num:"5219935901741", key:"1112304"},  // RH
+  2: {num:"5219932060371", key:"5648074"},  // Juridica
+  3: {num:"5219931606023", key:"6903243"},  // Finanzas
+  4: {num:"5219933834756", key:"8853682"},  // Tesoreria
+  5: {num:"5219931099995", key:"9503823"},  // Facturacion
+  6: {num:"5219333038958", key:"3050552"},  // Contabilidad
+  7: {num:"5219932793960", key:"3496526"},  // Obras
+  8: {num:"5219993065544", key:""},         // Ventas - pendiente
+  9: {num:"5219934339562", key:"1292044"},  // Rec. Materiales
+  10:{num:"5219932103769", key:"3435083"},  // Compras
+};
+
+function notifyWA(dirId, msg) {
+  var d = DIRECTOR_WA[dirId];
+  if(!d || !d.key) return; // skip if no key yet
+  var url = "https://api.callmebot.com/whatsapp.php?phone=" + d.num + "&text=" + encodeURIComponent(msg) + "&apikey=" + d.key;
+  fetch(url).catch(function(e){ console.log("WA notify error:", e); });
+}
+
+function notifyDGComment(dirId, taskName) {
+  var dirName = getDirName(dirId);
+  var msg = "Tablero Ejecutivo: El Director General dejo un comentario en tu pendiente: " + taskName + ". Entra al tablero para responder.";
+  notifyWA(dirId, msg);
+}
+
+function notifyAssigned(dirId, taskName) {
+  var msg = "Tablero Ejecutivo: El Director General te asigno una nueva tarea: " + taskName + ". Entra al tablero para verla.";
+  notifyWA(dirId, msg);
+}
 
 function showToast(msg){var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},2500);}
 
