@@ -515,14 +515,19 @@ function notifyWA(dirId, msg) {
 }
 
 function notifyDGComment(dirId, taskName) {
-  var dirName = getDirName(dirId);
-  var msg = "Tablero Ejecutivo: El Director General dejo un comentario en tu pendiente: " + taskName + ". Entra al tablero para responder.";
-  notifyWA(dirId, msg);
+  var d = DIRECTOR_WA[dirId];
+  if(!d || !d.num) return;
+  var msg = "Tablero Ejecutivo: tienes un comentario del Director General en el pendiente: " + taskName + ". Entra al tablero para responder: https://laurisvla-ux.github.io/tablero";
+  var waUrl = "https://wa.me/" + d.num + "?text=" + encodeURIComponent(msg);
+  window.open(waUrl, "_blank");
 }
 
 function notifyAssigned(dirId, taskName) {
-  var msg = "Tablero Ejecutivo: El Director General te asigno una nueva tarea: " + taskName + ". Entra al tablero para verla.";
-  notifyWA(dirId, msg);
+  var d = DIRECTOR_WA[dirId];
+  if(!d || !d.num) return;
+  var msg = "Tablero Ejecutivo: el Director General te asigno una nueva tarea: " + taskName + ". Entra al tablero: https://laurisvla-ux.github.io/tablero";
+  var waUrl = "https://wa.me/" + d.num + "?text=" + encodeURIComponent(msg);
+  window.open(waUrl, "_blank");
 }
 
 function showToast(msg){var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},2500);}
