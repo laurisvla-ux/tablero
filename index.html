@@ -502,11 +502,16 @@ var DIRECTOR_WA = {
   10:{num:"5219932103769", key:"3435083"},  // Compras
 };
 
+var MAKE_WEBHOOK = "https://hook.us2.make.com/7hutx9dpatnbkwjuayds4nbbbf8fite4";
+
 function notifyWA(dirId, msg) {
   var d = DIRECTOR_WA[dirId];
-  if(!d || !d.key) return; // skip if no key yet
-  var url = "https://api.callmebot.com/whatsapp.php?phone=" + d.num + "&text=" + encodeURIComponent(msg) + "&apikey=" + d.key;
-  fetch(url).catch(function(e){ console.log("WA notify error:", e); });
+  if(!d || !d.key) return;
+  fetch(MAKE_WEBHOOK, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({phone: d.num, text: msg, apikey: d.key})
+  }).catch(function(e){ console.log("Make webhook error:", e); });
 }
 
 function notifyDGComment(dirId, taskName) {
