@@ -548,14 +548,18 @@ var DIR_EMAIL = {
   10:{name:"Dir. Compras",           email:"cmf.compras04@hotmail.com"}
 };
 
-function notifyWA(dirId, msg) {
-  var d = DIRECTOR_WA[dirId];
-  if(!d || !d.key) return;
-  fetch(MAKE_WEBHOOK, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({phone: d.num, text: msg, apikey: d.key})
-  }).catch(function(e){ console.log("Make webhook error:", e); });
+function notifyEmail(dirId, msg) {
+  var d = DIR_EMAIL[dirId];
+  if(!d || !d.email) return;
+  emailjs.send(EJS_SVC, EJS_TPL, {
+    to_name: d.name,
+    to_email: d.email,
+    message: msg
+  }).then(function(){
+    console.log("Email enviado a " + d.email);
+  }).catch(function(e){
+    console.log("EmailJS error:", JSON.stringify(e));
+  });
 }
 
 function notifyDGComment(dirId, taskName) {
