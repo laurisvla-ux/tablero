@@ -6,6 +6,7 @@
 <title>Tablero Ejecutivo</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <style>
@@ -502,7 +503,25 @@ var DIRECTOR_WA = {
   10:{num:"5219932103769", key:"3435083"},  // Compras
 };
 
-var MAKE_WEBHOOK = "https://hook.us2.make.com/7hutx9dpatnbkwjuayds4nbbbf8fite4";
+// EMAILJS CONFIG
+var EJS_SVC = "service_bat7mu8";
+var EJS_TPL = "template_r5r7hjo";
+var EJS_KEY = "T0Zo0kW-rOSKL6zUm";
+emailjs.init(EJS_KEY);
+
+// DIRECTOR EMAILS
+var DIR_EMAIL = {
+  1: {name:"Dir. Recursos Humanos",  email:"cmf.recursoshumanos@outlook.es"},
+  2: {name:"Dir. Juridico",          email:"masfondos.erb@gmail.com"},
+  3: {name:"Dir. Finanzas",          email:"laurisvla@gmail.com"},
+  4: {name:"Dir. Tesoreria",         email:"Tesoreriamasfondos@gmail.com"},
+  5: {name:"Dir. Facturacion",       email:"masfondosfacturascorporativo@gmail.com"},
+  6: {name:"Dir. Contabilidad",      email:"rogaiz_881020@hotmail.com"},
+  7: {name:"Dir. Obras",             email:"Andycruzl.2013@gmail.com"},
+  8: {name:"Dir. Ventas",            email:"fdelr20@hotmail.com"},
+  9: {name:"Dir. Rec. Materiales",   email:"mac_astor@hotmail.com"},
+  10:{name:"Dir. Compras",           email:"cmf.compras04@hotmail.com"}
+};
 
 function notifyWA(dirId, msg) {
   var d = DIRECTOR_WA[dirId];
@@ -515,19 +534,13 @@ function notifyWA(dirId, msg) {
 }
 
 function notifyDGComment(dirId, taskName) {
-  var d = DIRECTOR_WA[dirId];
-  if(!d || !d.num) return;
-  var msg = "Tablero Ejecutivo: tienes un comentario del Director General en el pendiente: " + taskName + ". Entra al tablero para responder: https://laurisvla-ux.github.io/tablero";
-  var waUrl = "https://wa.me/" + d.num + "?text=" + encodeURIComponent(msg);
-  window.open(waUrl, "_blank");
+  var msg = "El Director General dejo un comentario en tu pendiente: " + taskName + ". Entra al tablero para responder.";
+  notifyEmail(dirId, msg);
 }
 
 function notifyAssigned(dirId, taskName) {
-  var d = DIRECTOR_WA[dirId];
-  if(!d || !d.num) return;
-  var msg = "Tablero Ejecutivo: el Director General te asigno una nueva tarea: " + taskName + ". Entra al tablero: https://laurisvla-ux.github.io/tablero";
-  var waUrl = "https://wa.me/" + d.num + "?text=" + encodeURIComponent(msg);
-  window.open(waUrl, "_blank");
+  var msg = "El Director General te asigno una nueva tarea: " + taskName + ". Entra al tablero para verla.";
+  notifyEmail(dirId, msg);
 }
 
 function showToast(msg){var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},2500);}
