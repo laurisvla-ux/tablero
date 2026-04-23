@@ -292,6 +292,24 @@ function buildChat(msgs,dirId,pIdx){
 }
 function escHtml(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 
+function delChatMsg(dirId,pIdx,msgIdx){
+  if(!confirm("¿Eliminar este mensaje?"))return;
+  var p=getPends(dirId);
+  if(!p[pIdx]||!p[pIdx].chat)return;
+  p[pIdx].chat.splice(msgIdx,1);
+  savePends(dirId,p);
+  showToast("Mensaje eliminado");
+}
+
+function delChatAll(dirId,pIdx){
+  if(!confirm("¿Borrar todo el hilo de comentarios?"))return;
+  var p=getPends(dirId);
+  if(!p[pIdx])return;
+  p[pIdx].chat=[];
+  savePends(dirId,p);
+  showToast("Hilo eliminado");
+}
+
 function sendChat(dirId,pIdx){
   var uid="ch_"+dirId+"_"+pIdx;
   var inp=document.getElementById(uid+"_i");
