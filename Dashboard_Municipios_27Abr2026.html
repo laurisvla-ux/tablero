@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Municipios — Abr 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --bg: #f0f2f6; --surface: #fff; --surface2: #f5f7fa;
+    --border: #e3e7ef; --text: #1a2035; --muted: #7a85a3;
+    --blue: #2563eb; --green: #16a34a; --amber: #d97706; --red: #dc2626; --purple: #7c3aed;
+    --font: 'DM Sans', sans-serif; --mono: 'DM Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; }
+
+  /* TOPBAR */
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 28px; height: 54px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+  .topbar-left { display: flex; align-items: center; gap: 10px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
+  .t-title { font-size: 14px; font-weight: 600; }
+  .t-sub { font-size: 11px; color: var(--muted); }
+  .badge { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 11px; color: var(--muted); font-family: var(--mono); }
+
+  /* LAYOUT */
+  .main { padding: 20px 28px; max-width: 1200px; margin: 0 auto; }
+  .lbl { font-size: 10px; font-weight: 500; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+
+  /* METRICS */
+  .metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
+  .mc { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; position: relative; overflow: hidden; }
+  .mc::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+  .mc.bl::before { background: var(--blue); }
+  .mc.gr::before { background: var(--green); }
+  .mc.am::before { background: var(--amber); }
+  .mc.pu::before { background: var(--purple); }
+  .mc-lbl { font-size: 10px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .mc-val { font-size: 22px; font-weight: 600; font-family: var(--mono); }
+  .mc-val.bl { color: var(--blue); } .mc-val.gr { color: var(--green); } .mc-val.am { color: var(--amber); } .mc-val.pu { color: var(--purple); }
+  .mc-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .mc-bar-bg { background: #e3e7ef; border-radius: 3px; height: 4px; margin-top: 10px; }
+  .mc-bar-fill { height: 4px; border-radius: 3px; }
+  .mc-pct { font-size: 11px; font-family: var(--mono); margin-top: 4px; }
+
+  /* CHARTS ROW */
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+  .card-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+  .leg-row { display: flex; gap: 12px; margin-bottom: 10px; }
+  .leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+  .leg-sq { width: 8px; height: 8px; border-radius: 2px; }
+
+  /* TABLE */
+  .tcard { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+  .thead-row { padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .search { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; color: var(--text); font-family: var(--font); font-size: 12px; outline: none; width: 200px; }
+  .search:focus { border-color: var(--blue); }
+  .search::placeholder { color: var(--muted); }
+  .filter-row { display: flex; gap: 6px; padding: 10px 18px; border-bottom: 1px solid var(--border); background: var(--surface2); flex-wrap: wrap; }
+  .fb { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 4px 12px; font-size: 11px; color: var(--muted); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .fb:hover { color: var(--text); border-color: #cbd2e0; }
+  .fb.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .twrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 10px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 14px; border-bottom: 1px solid var(--border); background: var(--surface2); white-space: nowrap; }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); font-size: 12px; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+  .mn { font-weight: 500; font-size: 13px; }
+  .mo { font-family: var(--mono); font-size: 11px; }
+  .pill { display: inline-flex; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+  .pg { background: #dcfce7; color: #15803d; }
+  .pa { background: #fef3c7; color: #b45309; }
+  .pr { background: #fee2e2; color: #b91c1c; }
+  .bar-bg { background: #e3e7ef; border-radius: 3px; height: 4px; width: 70px; display: inline-block; vertical-align: middle; }
+  .bar-fill { height: 4px; border-radius: 3px; }
+  .pct { font-size: 11px; font-family: var(--mono); margin-left: 5px; color: var(--muted); }
+
+  .footer { text-align: center; padding: 14px; color: var(--muted); font-size: 11px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="dot"></div>
+    <div>
+      <div class="t-title">Dashboard General — Municipios</div>
+      <div class="t-sub">Seguimiento de inversión y utilidades</div>
+    </div>
+  </div>
+  <div class="badge">27 Abril 2026</div>
+</div>
+
+<div class="main">
+
+  <div class="lbl">Métricas clave</div>
+  <div class="metrics">
+    <div class="mc bl">
+      <div class="mc-lbl">Aportación total</div>
+      <div class="mc-val bl">$57.1M</div>
+      <div class="mc-sub">20 municipios activos</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:100%;background:var(--blue);"></div></div>
+      <div class="mc-pct" style="color:var(--blue);">100% base de inversión</div>
+    </div>
+    <div class="mc gr">
+      <div class="mc-lbl">Recuperado</div>
+      <div class="mc-val gr">$46.2M</div>
+      <div class="mc-sub">de $57.1M aportados</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:80.9%;background:var(--green);"></div></div>
+      <div class="mc-pct" style="color:var(--green);">80.9% recuperado</div>
+    </div>
+    <div class="mc am">
+      <div class="mc-lbl">Utilidad esperada</div>
+      <div class="mc-val am">$72.4M</div>
+      <div class="mc-sub">en todos los proyectos</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:100%;background:var(--amber);"></div></div>
+      <div class="mc-pct" style="color:var(--amber);">126.8% sobre lo invertido</div>
+    </div>
+    <div class="mc pu">
+      <div class="mc-lbl">Utilidad cobrada</div>
+      <div class="mc-val pu">$20.9M</div>
+      <div class="mc-sub">de $57.1M invertidos</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:36.6%;background:var(--purple);"></div></div>
+      <div class="mc-pct" style="color:var(--purple);">36.6% sobre lo invertido</div>
+    </div>
+  </div>
+
+  <div class="lbl">Gráficas</div>
+  <div class="charts">
+    <div class="card">
+      <div class="card-title">Avance recuperación de inversión (%)</div>
+      <div style="position:relative;height:320px;"><canvas id="cRec"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Utilidad esperada vs cobrada (MDP)</div>
+      <div class="leg-row">
+        <div class="leg"><div class="leg-sq" style="background:#2563eb;"></div>Esperada</div>
+        <div class="leg"><div class="leg-sq" style="background:#16a34a;"></div>Cobrada</div>
+      </div>
+      <div style="position:relative;height:296px;"><canvas id="cUtil"></canvas></div>
+    </div>
+  </div>
+
+  <div class="lbl">Detalle por municipio</div>
+  <div class="tcard">
+    <div class="thead-row">
+      <div style="font-size:12px;font-weight:600;">Todos los municipios</div>
+      <input class="search" id="search" placeholder="Buscar..." oninput="filterTable()">
+    </div>
+    <div class="filter-row">
+      <button class="fb on" onclick="setFilter('todos',this)">Todos (20)</button>
+      <button class="fb" onclick="setFilter('Recuperado',this)">✓ Recuperado (6)</button>
+      <button class="fb" onclick="setFilter('Parcial',this)">~ Parcial (9)</button>
+      <button class="fb" onclick="setFilter('Sin recuperar',this)">✗ Sin recuperar (2)</button>
+      <button class="fb" onclick="setFilter('Sin inversión',this)">○ Sin inversión (3)</button>
+    </div>
+    <div class="twrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Municipio</th>
+            <th>Aportación</th>
+            <th>Recuperado</th>
+            <th>Avance inversión</th>
+            <th>Estado</th>
+            <th>Util. esperada</th>
+            <th>Util. cobrada</th>
+            <th>Avance utilidad</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">Corte: 27 de abril de 2026 · Hoja GENERAL del informe mensual</div>
+
+<script>
+const DATA = [
+  { m:'Balancán',         ap:1000000,  rec:118400,       avI:11.84, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
+  { m:'Centla',           ap:3000000,  rec:2853739.74,   avI:95.12, stI:'Parcial',       ue:778739.74,   uc:0,          avU:0     },
+  { m:'Comalcalco',       ap:53000,    rec:169907.38,    avI:100,   stI:'Recuperado',    ue:116907.38,   uc:116907.38,  avU:100   },
+  { m:'Durango',          ap:5000000,  rec:0,            avI:0,     stI:'Sin recuperar', ue:0,           uc:0,          avU:0     },
+  { m:'Jalapa',           ap:900000,   rec:413263.04,    avI:45.92, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
+  { m:'Jalpa de Méndez',  ap:1500000,  rec:1253431.45,   avI:83.56, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
+  { m:'Jonuta',           ap:1575000,  rec:1107468.35,   avI:70.32, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
+  { m:'Mérida',           ap:2000000,  rec:3947686.56,   avI:100,   stI:'Recuperado',    ue:3163217.46,  uc:1947686.56, avU:61.57 },
+  { m:'Nacajuca',         ap:0,        rec:0,            avI:0,     stI:'Sin inversión', ue:1095045.03,  uc:1095045.03, avU:100   },
+  { m:'Naucalpan',        ap:3000000,  rec:10742197.02,  avI:100,   stI:'Recuperado',    ue:7742196.02,  uc:7742196.02, avU:100   },
+  { m:'Paraíso',          ap:0,        rec:0,            avI:0,     stI:'Sin inversión', ue:10468440.50, uc:3937679.35, avU:37.61 },
+  { m:'Pichucalco',       ap:3000000,  rec:2394267.78,   avI:79.81, stI:'Parcial',       ue:253295.63,   uc:0,          avU:0     },
+  { m:'Playa del Carmen', ap:6000000,  rec:3776147.98,   avI:62.94, stI:'Parcial',       ue:1153738.25,  uc:0,          avU:0     },
+  { m:'Tuxtla',           ap:3500000,  rec:4536746.55,   avI:100,   stI:'Recuperado',    ue:5657491.72,  uc:1036746.55, avU:18.33 },
+  { m:'Teapa',            ap:5240000,  rec:7385109.54,   avI:100,   stI:'Recuperado',    ue:6257011.08,  uc:2145109.54, avU:34.28 },
+  { m:'Tenosique',        ap:0,        rec:0,            avI:0,     stI:'Sin inversión', ue:1007875.31,  uc:0,          avU:0     },
+  { m:'Tulum',            ap:1500000,  rec:0,            avI:0,     stI:'Sin recuperar', ue:0,           uc:0,          avU:0     },
+  { m:'Xochimilco',       ap:4000000,  rec:6846881.55,   avI:100,   stI:'Recuperado',    ue:24903411.88, uc:2846881.55, avU:11.43 },
+  { m:'Veracruz',         ap:13790000, rec:200467.36,    avI:1.45,  stI:'Parcial',       ue:9834372.07,  uc:0,          avU:0     },
+  { m:'Zitácuaro',        ap:2000000,  rec:411623.56,    avI:20.58, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
+];
+
+let filter = 'todos';
+
+function fx(v) { if(!v||v===0) return '—'; return v>=1e6 ? '$'+(v/1e6).toFixed(2)+'M' : '$'+Math.round(v/1000)+'K'; }
+function bc(p) { return p>=100?'#16a34a':p>=50?'#d97706':'#dc2626'; }
+function bar(p,c) { return `<div style="display:inline-flex;align-items:center;gap:5px;"><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(p,100)}%;background:${c};"></div></div><span class="pct">${Math.round(p)}%</span></div>`; }
+function pill(s) {
+  if (s==='Recuperado') return `<span class="pill pg">Recuperado</span>`;
+  if (s==='Parcial') return `<span class="pill pa">Parcial</span>`;
+  if (s==='Sin inversión') return `<span class="pill" style="background:#eff6ff;color:#1d4ed8;">Sin inversión</span>`;
+  return `<span class="pill pr">Sin recuperar</span>`;
+}
+
+function render(data) {
+  document.getElementById('tbody').innerHTML = data.map(d => `<tr>
+    <td class="mn">${d.m}</td>
+    <td class="mo">${d.ap>0?fx(d.ap):'—'}</td>
+    <td class="mo">${d.rec>0?fx(d.rec):'—'}</td>
+    <td>${bar(d.avI,bc(d.avI))}</td>
+    <td>${pill(d.stI)}</td>
+    <td class="mo">${d.ue>0?fx(d.ue):'—'}</td>
+    <td class="mo">${d.uc>0?fx(d.uc):'—'}</td>
+    <td>${d.ue>0?bar(d.avU,bc(d.avU)):'<span style="color:#e3e7ef;">—</span>'}</td>
+  </tr>`).join('');
+}
+
+function setFilter(v, btn) {
+  filter = v;
+  document.querySelectorAll('.fb').forEach(b => b.className='fb');
+  btn.classList.add('on');
+  filterTable();
+}
+
+function filterTable() {
+  const q = document.getElementById('search').value.toLowerCase();
+  let d = DATA;
+  if (filter !== 'todos') d = d.filter(x => x.stI === filter);
+  if (q) d = d.filter(x => x.m.toLowerCase().includes(q));
+  render(d);
+}
+
+render(DATA);
+
+const sorted = [...DATA].sort((a,b) => b.avI - a.avI);
+new Chart(document.getElementById('cRec'), {
+  type: 'bar',
+  data: { labels: sorted.map(d=>d.m), datasets: [{ data: sorted.map(d=>d.avI), backgroundColor: sorted.map(d=>bc(d.avI)), borderRadius: 3 }] },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: {display:false}, tooltip: { callbacks: { label: c=>' '+c.raw.toFixed(1)+'%' }, backgroundColor:'#1a2035', titleColor:'#f0f2f8', bodyColor:'#7a85a3', borderColor:'#e3e7ef', borderWidth:1 } },
+    scales: {
+      x: { min:0, max:100, ticks: { callback: v=>v+'%', color:'#7a85a3', font:{size:10} }, grid: { color:'#f0f2f6' }, border:{display:false} },
+      y: { ticks: { color:'#1a2035', font:{size:10} }, grid:{display:false}, border:{display:false} }
+    }
+  }
+});
+
+const ud = DATA.filter(d=>d.ue>0).sort((a,b)=>b.ue-a.ue).slice(0,10);
+new Chart(document.getElementById('cUtil'), {
+  type: 'bar',
+  data: {
+    labels: ud.map(d=>d.m),
+    datasets: [
+      { label:'Esperada', data: ud.map(d=>+(d.ue/1e6).toFixed(2)), backgroundColor:'#2563eb', borderRadius:3 },
+      { label:'Cobrada',  data: ud.map(d=>+(d.uc/1e6).toFixed(2)), backgroundColor:'#16a34a', borderRadius:3 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{display:false}, tooltip: { callbacks: { label: c=>' $'+c.raw.toFixed(2)+'M' }, backgroundColor:'#1a2035', titleColor:'#f0f2f8', bodyColor:'#7a85a3', borderColor:'#e3e7ef', borderWidth:1 } },
+    scales: {
+      x: { ticks: { color:'#7a85a3', font:{size:10}, maxRotation:40, autoSkip:false }, grid:{display:false}, border:{display:false} },
+      y: { ticks: { callback: v=>'$'+v+'M', color:'#7a85a3', font:{size:10} }, grid:{color:'#f0f2f6'}, border:{display:false} }
+    }
+  }
+});
+</script>
+</body>
+</html>
