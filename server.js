@@ -594,7 +594,7 @@ function renderDG(){
     }
     var dOpts=DIAS.map(function(x,i){return '<option value="'+i+'"'+(i===aD?" selected":"")+">S"+(i<6?1:2)+" "+x+" "+FECHAS[i]+"</option>";}).join("");
     var ak="a"+d.id,isAO=openAK===ak;
-    var af='<div style="padding:8px 1.25rem;border-top:1px solid var(--bd);text-align:right;"><button class="bsm b-pu" onclick="togA('"+ak+"')">+ Asignar tarea</button></div><div class="aform'+(isAO?" open":"")+'" id="af'+d.id+'"><div class="albl">Asignar a '+d.nf+'</div><div class="fl g8 fw"><input class="ai" id="at'+d.id+'" placeholder="Descripcion..."><select class="as2" id="apr'+d.id+'"><option value="normal">Normal</option><option value="urgente">Urgente</option></select><select class="as2" id="adia'+d.id+'">'+dOpts+'</select><button class="asnd" onclick="asig('+d.id+')">Asignar</button></div></div>';
+    var af='<div style="padding:8px 1.25rem;border-top:1px solid var(--bd);text-align:right;"><button class="bsm b-pu" onclick="openAssign('+JSON.stringify(d.id)+')">+ Asignar tarea</button></div><div class="aform'+(isAO?' open':'')+'" id="af'+d.id+'"><div class="albl">Asignar a '+d.nf+'</div><div class="fl g8 fw"><input class="ai" id="at'+d.id+'" placeholder="Descripcion..."><select class="as2" id="apr'+d.id+'"><option value="normal">Normal</option><option value="urgente">Urgente</option></select><select class="as2" id="adia'+d.id+'">'+dOpts+'</select><button class="asnd" onclick="asig('+d.id+')">Asignar</button></div></div>';
     return '<div class="dcard"><div class="dhd" onclick="togD('+d.id+')"><div class="fla g12"><div class="dav" style="background:'+d.c+';color:'+d.tc+';">'+d.i+'</div><div><div class="dnm">'+d.nf+'</div><div class="dsub">'+pends.length+' pendiente'+(pends.length!==1?'s':'')+' esta semana</div></div></div><div class="fla g8" style="flex-wrap:wrap;justify-content:flex-end;max-width:55%;">'+(pills||'<span class="chip" style="background:var(--s2);color:var(--t2);">Sin pendientes</span>')+'<span class="chev'+(isO?" open":"")+'">&#x203A;</span></div></div><div class="dbody'+(isO?" open":"")+'"><div>'+dt+'</div>'+ph+af+'</div></div>';
   }).join("");
   el.innerHTML=weekSel+LGD+'<div class="sgrid"><div class="sc"><div class="sclbl">Pendientes</div><div class="scval" style="color:var(--am);">'+tP+'</div></div><div class="sc"><div class="sclbl">En proceso</div><div class="scval" style="color:var(--bl);">'+tPr+'</div></div><div class="sc"><div class="sclbl">Terminados</div><div class="scval" style="color:var(--gn);">'+tT+'</div></div><div class="sc"><div class="sclbl">Urgentes</div><div class="scval" style="color:var(--re);">'+tU+'</div></div><div class="sc"><div class="sclbl">Normales</div><div class="scval" style="color:var(--gy);">'+tN+'</div></div></div><div class="echart"><div style="font-size:14px;font-weight:600;margin-bottom:4px;">Tareas por direccion</div><div style="font-size:12px;color:var(--t2);margin-bottom:1rem;">Pendiente · En proceso · Terminado</div><div class="ewrap"><canvas id="chart"></canvas></div></div>'+cards;
@@ -612,7 +612,7 @@ function renderChart(){
 
 function togD(id){openD[id]=!openD[id];renderDG();}
 function dgSD(id,d){dgD[id]=d;renderDG();}
-function togA(k){openAK=openAK===k?null:k;renderDG();}
+function openAssign(id){togA("a"+id);}function togA(k){openAK=openAK===k?null:k;renderDG();}
 function asig(did){
   var txt=document.getElementById("at"+did).value.trim();
   if(!txt){showToast("Escribe la descripcion");return;}
