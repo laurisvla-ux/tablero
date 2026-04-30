@@ -523,7 +523,17 @@ function addPend(){
   var p=getPends(CU.d);
   p.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[]});
   savePends(CU.d,p);
-  col.forEach(function(cid){if(cid===CU.d)return;var cp=getPends(cid);cp.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[],mirroredFrom:CU.d});savePends(cid,cp);});
+  col.forEach(function(cid){if(cid===CU.d)return;var cp=getPends(cid);cp.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[],mirroredFrom:CU.d});savePends(cid,cp);
+    // Notificar por correo
+    var de=DIR_EMAIL[cid];
+    if(de&&de.email){
+      emailjs.send(EJS_SVC,EJS_TPL,{
+        to_name:de.name,
+        to_email:de.email,
+        message:"La Direccion de "+getDirName(CU.d)+" te ha incluido como colaborador en la actividad:\n\n"+txt+"\n\nEntra al tablero para verla: https://tablero-production-998a.up.railway.app"
+      }).catch(function(){});
+    }
+  });
   showToast("Pendiente guardado");
 }
 
@@ -718,9 +728,14 @@ function enviarAviso(){
   var seleccionados=[];
   document.querySelectorAll('.aviso-dir:checked').forEach(function(c){seleccionados.push(parseInt(c.value));});
   if(!seleccionados.length){showToast("Selecciona al menos un director");return;}
+  document.getElementById('aviso-modal').classList.remove('open');
+  showToast("Enviando avisos...");
   var total=seleccionados.length,enviados=0;
-  seleccionados.forEach(function(id){
-    var d=DIR_EMAIL[id];if(!d)return;
+  // Send with 1.5 second delay between each to avoid rate limit
+  function enviarUno(idx){
+    if(idx>=seleccionados.length)return;
+    var id=seleccionados[idx];
+    var d=DIR_EMAIL[id];if(!d){enviarUno(idx+1);return;}
     emailjs.send(EJS_SVC,EJS_TPL,{
       to_name:d.name,
       to_email:d.email,
@@ -728,9 +743,13 @@ function enviarAviso(){
     }).then(function(){
       enviados++;
       if(enviados===total){showToast("Aviso enviado a "+total+" director"+(total>1?"es":"")+" ✓");}
-    }).catch(function(e){console.log("Error:",e);});
-  });
-  document.getElementById('aviso-modal').classList.remove('open');
+      setTimeout(function(){enviarUno(idx+1);},1500);
+    }).catch(function(e){
+      console.log("Error enviando a dir "+id,e);
+      setTimeout(function(){enviarUno(idx+1);},1500);
+    });
+  }
+  enviarUno(0);
 }
 
 function showToast(msg){var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},2500);}
