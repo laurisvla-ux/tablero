@@ -491,9 +491,10 @@ function renderDir(){
       var p=dp[j].p,gi=dp[j].gi,pct=p.pct||0;
       var cls=p.assignedByDG?"iA":(p.mirroredFrom?"iC":"");
       var canDel=!p.assignedByDG&&!p.mirroredFrom;
+      var canEdit=!p.assignedByDG; // colaboradores pueden editar, asignadas por DG no
       var badges=(p.assignedByDG?'<span class="chip c-dg">Asignado DG</span>':'')+(p.mirroredFrom?'<span class="chip c-mi">&#x2197; Compartida</span>':'');
       var ec=p.est==="pendiente"?"pe":p.est==="en-proceso"?"pr":"te";
-      ph+='<div class="pitem '+cls+'"><div class="fl g10"><div style="width:9px;height:9px;border-radius:50%;background:'+eC(p.est)+';flex-shrink:0;margin-top:5px;"></div><div class="f1"><div class="pnm">'+escHtml(p.txt)+'</div><div class="pch"><span class="chip c-'+ec+'">'+eL(p.est)+'</span><span class="chip c-'+(p.prio==="urgente"?"ur":"no")+'">'+(p.prio==="urgente"?"&#x25B2; Urgente":"&#x25CF; Normal")+'</span><span class="chip c-pc">'+pct+'%</span>'+fChip(p.fecha)+cChip(p.colabs)+badges+'</div><div class="pwrap"><div class="plbl">Avance: '+pct+'%</div><div class="pbar"><div class="pfil" style="width:'+pct+'%;background:'+eC(p.est)+'"></div></div></div>'+(p.nota?'<div class="nbox">'+escHtml(p.nota)+'</div>':'')+buildChat(p.chat,CU.d,gi)+'</div><div class="fl g8" style="flex-direction:column;flex-shrink:0;"><button class="bsm b-bl" onclick="openEd('+gi+')">Editar</button>'+(canDel?'<button class="bsm b-re" onclick="delPend('+gi+')">&#x2715;</button>':'')+'</div></div></div>';
+      ph+='<div class="pitem '+cls+'"><div class="fl g10"><div style="width:9px;height:9px;border-radius:50%;background:'+eC(p.est)+';flex-shrink:0;margin-top:5px;"></div><div class="f1"><div class="pnm">'+escHtml(p.txt)+'</div><div class="pch"><span class="chip c-'+ec+'">'+eL(p.est)+'</span><span class="chip c-'+(p.prio==="urgente"?"ur":"no")+'">'+(p.prio==="urgente"?"&#x25B2; Urgente":"&#x25CF; Normal")+'</span><span class="chip c-pc">'+pct+'%</span>'+fChip(p.fecha)+cChip(p.colabs)+badges+'</div><div class="pwrap"><div class="plbl">Avance: '+pct+'%</div><div class="pbar"><div class="pfil" style="width:'+pct+'%;background:'+eC(p.est)+'"></div></div></div>'+(p.nota?'<div class="nbox">'+escHtml(p.nota)+'</div>':'')+buildChat(p.chat,CU.d,gi)+'</div><div class="fl g8" style="flex-direction:column;flex-shrink:0;">'+(canEdit?'<button class="bsm b-bl" onclick="openEd('+gi+')">Editar</button>':'')+(canDel?'<button class="bsm b-re" onclick="delPend('+gi+')">&#x2715;</button>':'')+'</div></div></div>';
     }
   }
   el.innerHTML='<div class="dhdr"><div class="dhav" style="background:'+meta.c+';color:'+meta.tc+';">'+meta.i+'</div><div><div style="font-size:17px;font-weight:600;">'+meta.nf+'</div><div style="font-size:12px;color:var(--t2);margin-top:2px;">'+pends.length+' pendiente'+(pends.length!==1?'s':'')+' esta semana</div></div></div>'+LGD+'<div class="twrap">'+th+'</div><div class="plist">'+ph+'</div>'
@@ -531,10 +532,10 @@ function addPend(){
     if(i>=colsN.length)return;
     var de=DIR_EMAIL[colsN[i]];
     if(de&&de.email){
-      emailjs.send(EJS_SVC,EJS_TPL,{to_name:de.name,to_email:de.email,message:"La Direccion de "+getDirName(CU.d)+" te incluyo como colaborador en: "+txt+". Entra al tablero: https://tablero-production-998a.up.railway.app"}).then(function(){setTimeout(function(){notifColab(i+1);},1500);}).catch(function(){setTimeout(function(){notifColab(i+1);},1500);});
+      emailjs.send(EJS_SVC,EJS_TPL,{to_name:de.name,to_email:de.email,message:"La Direccion de "+getDirName(CU.d)+" te incluyo como colaborador en: "+txt+". Entra al tablero: https://tablero-production-998a.up.railway.app"}).then(function(){setTimeout(function(){notifColab(i+1);},2000);}).catch(function(){setTimeout(function(){notifColab(i+1);},2000);});
     } else { notifColab(i+1); }
   }
-  if(colsN.length)setTimeout(function(){notifColab(0);},500);col.forEach(function(cid){if(cid===CU.d)return;var cp=getPends(cid);cp.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[],mirroredFrom:CU.d});savePends(cid,cp);
+  if(colsN.length)setTimeout(function(){notifColab(0);},2000);col.forEach(function(cid){if(cid===CU.d)return;var cp=getPends(cid);cp.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[],mirroredFrom:CU.d});savePends(cid,cp);
     // Notificar por correo
     var de=DIR_EMAIL[cid];
     if(de&&de.email){
@@ -754,10 +755,10 @@ function enviarAviso(){
     }).then(function(){
       enviados++;
       if(enviados===total){showToast("Aviso enviado a "+total+" director"+(total>1?"es":"")+" ✓");}
-      setTimeout(function(){enviarUno(idx+1);},1500);
+      setTimeout(function(){enviarUno(idx+1);},2000);
     }).catch(function(e){
       console.log("Error enviando a dir "+id,e);
-      setTimeout(function(){enviarUno(idx+1);},1500);
+      setTimeout(function(){enviarUno(idx+1);},2000);
     });
   }
   enviarUno(0);
