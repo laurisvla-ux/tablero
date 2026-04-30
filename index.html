@@ -523,7 +523,18 @@ function addPend(){
   var p=getPends(CU.d);
   p.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[]});
   savePends(CU.d,p);
-  col.forEach(function(cid){if(cid===CU.d)return;var cp=getPends(cid);cp.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[],mirroredFrom:CU.d});savePends(cid,cp);
+  col.forEach(function(cid){if(cid===CU.d)return;var cp=getPends(cid);cp.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[],mirroredFrom:CU.d});savePends(cid,cp);});
+  showToast("Pendiente guardado");renderDir();
+  // Notificar colaboradores uno por uno
+  var colsN=col.filter(function(c){return c!==CU.d;});
+  function notifColab(i){
+    if(i>=colsN.length)return;
+    var de=DIR_EMAIL[colsN[i]];
+    if(de&&de.email){
+      emailjs.send(EJS_SVC,EJS_TPL,{to_name:de.name,to_email:de.email,message:"La Direccion de "+getDirName(CU.d)+" te incluyo como colaborador en: "+txt+". Entra al tablero: https://tablero-production-998a.up.railway.app"}).then(function(){setTimeout(function(){notifColab(i+1);},1500);}).catch(function(){setTimeout(function(){notifColab(i+1);},1500);});
+    } else { notifColab(i+1); }
+  }
+  if(colsN.length)setTimeout(function(){notifColab(0);},500);col.forEach(function(cid){if(cid===CU.d)return;var cp=getPends(cid);cp.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[],mirroredFrom:CU.d});savePends(cid,cp);
     // Notificar por correo
     var de=DIR_EMAIL[cid];
     if(de&&de.email){
