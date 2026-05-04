@@ -154,7 +154,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ac);}
       <div class="fg"><label class="lbl">Prioridad</label><select id="epri" style="margin-bottom:0;"><option value="normal">Normal</option><option value="urgente">Urgente</option></select></div>
       <div class="fg"><label class="lbl">Avance (%)</label><input type="number" id="epct" min="0" max="100" style="margin-bottom:0;"></div>
     </div>
-    <label class="lbl">Fecha compromiso</label><input type="date" id="efec">
+    <div class="fl g10 fw"><div class="fg"><label class="lbl">Fecha compromiso</label><input type="date" id="efec" style="margin-bottom:0;"></div><div class="fg"><label class="lbl">Hora</label><input type="time" id="ehor" style="margin-bottom:0;"></div></div><div style="margin-bottom:1rem;"></div>
     <label class="lbl">Colaboradoras</label>
     <select id="ecol" multiple style="height:90px;"><option value="1">Dir. de RH</option><option value="2">Dir. Juridica</option><option value="3">Dir. Financiera</option><option value="4">Dir. de Tesoreria</option><option value="5">Dir. de Facturacion</option><option value="6">Dir. de Contabilidad</option><option value="7">Dir. de Obras</option><option value="8">Dir. de Ventas</option><option value="9">Dir. Rec. Materiales</option><option value="10">Dir. de Compras</option></select>
     <div style="font-size:11px;color:var(--t3);margin-bottom:.75rem;">Ctrl/Cmd+clic para varias</div>
@@ -282,6 +282,10 @@ function subAll(cb){
 function eL(e){return e==="pendiente"?"Pendiente":e==="en-proceso"?"En proceso":"Terminado";}
 function eC(e){return e==="pendiente"?"var(--am)":e==="en-proceso"?"var(--bl)":"var(--gn)";}
 function escHtml(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function horaChip(h){
+  if(!h)return "";
+  return '<span class="chip c-fe">&#x23F0; '+h+'</span>';
+}
 function fChip(f){
   if(!f)return "";
   var h=new Date();h.setHours(0,0,0,0);
@@ -448,7 +452,7 @@ function renderDir(){
       var canDel=!p.assignedByDG&&!p.mirroredFrom;
       var badges=(p.assignedByDG?'<span class="chip c-dg">Asignado DG</span>':"")+(p.mirroredFrom?'<span class="chip c-mi">&#x2197; Compartida</span>':"");
       var ec=p.est==="pendiente"?"pe":p.est==="en-proceso"?"pr":"te";
-      ph+='<div class="pitem '+cls+'"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px;"><div class="pnm" style="flex:1;">'+escHtml(p.txt)+'</div><div style="display:flex;gap:5px;flex-shrink:0;"><button class="bsm b-bl" onclick="openEd('+gi+')">Editar</button>'+(canDel?'<button class="bsm b-re" onclick="delPend('+gi+')">&#x2715;</button>':'')+'</div></div><div class="pch"><span class="chip c-'+ec+'">'+eL(p.est)+'</span><span class="chip c-'+(p.prio==="urgente"?"ur":"no")+'">'+( p.prio==="urgente"?"&#x25B2; Urgente":"&#x25CF; Normal" )+'</span><span class="chip c-pc">'+pct+'%</span>'+fChip(p.fecha)+cChip(p.colabs)+badges+'</div><div class="pwrap"><div class="plbl">Avance: '+pct+'%</div><div class="pbar"><div class="pfil" style="width:'+pct+'%;background:'+eC(p.est)+'"></div></div></div>'+(p.nota?'<div class="nbox">'+escHtml(p.nota)+'</div>':'')+buildChat(p.chat,CU.d,gi)+'</div>';
+      ph+='<div class="pitem '+cls+'"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px;"><div class="pnm" style="flex:1;">'+escHtml(p.txt)+'</div><div style="display:flex;gap:5px;flex-shrink:0;"><button class="bsm b-bl" onclick="openEd('+gi+')">Editar</button>'+(canDel?'<button class="bsm b-re" onclick="delPend('+gi+')">&#x2715;</button>':'')+'</div></div><div class="pch"><span class="chip c-'+ec+'">'+eL(p.est)+'</span><span class="chip c-'+(p.prio==="urgente"?"ur":"no")+'">'+( p.prio==="urgente"?"&#x25B2; Urgente":"&#x25CF; Normal" )+'</span><span class="chip c-pc">'+pct+'%</span>'+fChip(p.fecha)+horaChip(p.hora)+cChip(p.colabs)+badges+'</div><div class="pwrap"><div class="plbl">Avance: '+pct+'%</div><div class="pbar"><div class="pfil" style="width:'+pct+'%;background:'+eC(p.est)+'"></div></div></div>'+(p.nota?'<div class="nbox">'+escHtml(p.nota)+'</div>':'')+buildChat(p.chat,CU.d,gi)+'</div>';
     }
   }
   el.innerHTML='<div class="dhdr"><div class="dhav" style="background:'+meta.c+';color:'+meta.tc+';">'+meta.i+'</div><div><div style="font-size:17px;font-weight:600;">'+meta.nf+'</div><div style="font-size:12px;color:var(--t2);margin-top:2px;">'+pends.length+' pendiente'+(pends.length!==1?'s':'')+' esta semana</div></div></div>'+LGD+'<div class="twrap">'+th+'</div><div class="plist">'+ph+'</div>'
@@ -456,7 +460,7 @@ function renderDir(){
   +'<div class="fl g10 fw"><div class="fg"><label class="lbl">Estatus</label><select id="nest" style="margin-bottom:0;"><option value="pendiente" selected>Pendiente</option><option value="en-proceso">En proceso</option><option value="terminado">Terminado</option></select></div>'
   +'<div class="fg"><label class="lbl">Prioridad</label><select id="npri" style="margin-bottom:0;"><option value="normal" selected>Normal</option><option value="urgente">Urgente</option></select></div>'
   +'<div class="fg"><label class="lbl">Avance (%)</label><input type="number" id="npct" min="0" max="100" value="0" style="margin-bottom:0;"></div></div>'
-  +'<div style="margin-top:.75rem;"><label class="lbl">Fecha compromiso</label><input type="date" id="nfec" style="margin-bottom:.75rem;"></div>'
+  +'<div style="margin-top:.75rem;" class="fl g10 fw"><div class="fg"><label class="lbl">Fecha compromiso</label><input type="date" id="nfec" style="margin-bottom:.75rem;"></div><div class="fg"><label class="lbl">Hora</label><input type="time" id="nhor" style="margin-bottom:.75rem;"></div></div>'
   +'<label class="lbl">Colaboradoras</label><select id="ncol" multiple style="height:90px;"><option value="1">Dir. de RH</option><option value="2">Dir. Juridica</option><option value="3">Dir. Financiera</option><option value="4">Dir. de Tesoreria</option><option value="5">Dir. de Facturacion</option><option value="6">Dir. de Contabilidad</option><option value="7">Dir. de Obras</option><option value="8">Dir. de Ventas</option><option value="9">Dir. Rec. Materiales</option><option value="10">Dir. de Compras</option></select>'
   +'<div style="font-size:11px;color:var(--t3);margin-bottom:.75rem;">Ctrl/Cmd+clic para varias</div>'
   +'<label class="lbl">Nota adicional</label><textarea id="nnot" rows="3" placeholder="Contexto..."></textarea>'
@@ -475,7 +479,7 @@ function addPend(){
   var fec=document.getElementById("nfec").value||"",not=document.getElementById("nnot").value.trim();
   var cs=document.getElementById("ncol"),col=Array.from(cs.selectedOptions).map(function(o){return parseInt(o.value);});
   var p=getPends(CU.d);
-  p.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,nota:not,colabs:col,dia:dirDia,chat:[]});
+  var hor=document.getElementById("nhor").value||"";p.push({txt:txt,est:est,prio:pri,pct:pct,fecha:fec,hora:hor,nota:not,colabs:col,dia:dirDia,chat:[]});
   savePends(CU.d,p);
   col.forEach(function(cid){
     if(cid===CU.d)return;
@@ -501,7 +505,7 @@ function openEd(idx){
   editIdx=idx;var p=getPends(CU.d)[idx];
   document.getElementById("etxt").value=p.txt;document.getElementById("eest").value=p.est;
   document.getElementById("epri").value=p.prio||"normal";document.getElementById("epct").value=p.pct||0;
-  document.getElementById("efec").value=p.fecha||"";document.getElementById("enot").value=p.nota||"";
+  document.getElementById("efec").value=p.fecha||"";document.getElementById("ehor").value=p.hora||"";document.getElementById("enot").value=p.nota||"";
   var ec=document.getElementById("ecol"),cur=p.colabs||[];
   Array.from(ec.options).forEach(function(o){o.selected=cur.indexOf(parseInt(o.value))>=0;o.disabled=parseInt(o.value)===CU.d;});
   document.getElementById("emod").classList.add("open");
@@ -512,7 +516,7 @@ function saveEd(){
   var p=getPends(CU.d),item=p[editIdx];
   item.txt=document.getElementById("etxt").value.trim();item.est=document.getElementById("eest").value;
   item.prio=document.getElementById("epri").value;item.pct=parseInt(document.getElementById("epct").value)||0;
-  item.fecha=document.getElementById("efec").value||"";item.nota=document.getElementById("enot").value.trim();
+  item.fecha=document.getElementById("efec").value||"";item.hora=document.getElementById("ehor").value||"";item.nota=document.getElementById("enot").value.trim();
   var ec=document.getElementById("ecol");item.colabs=Array.from(ec.selectedOptions).map(function(o){return parseInt(o.value);});
   savePends(CU.d,p);closeMod();showToast("Actualizado");
 }
@@ -556,7 +560,7 @@ function renderDG(){
         var canDel=p.assignedByDG===true;
         var badges=(p.assignedByDG?'<span class="chip c-dg">DG</span>':"")+(p.mirroredFrom?'<span class="chip c-mi">&#x2197; De: '+getDirName(p.mirroredFrom)+'</span>':"");
         var ec=p.est==="pendiente"?"pe":p.est==="en-proceso"?"pr":"te";
-        ph+='<div class="dgrow '+cls+'"><div style="width:9px;height:9px;border-radius:50%;background:'+eC(p.est)+';flex-shrink:0;margin-top:5px;"></div><div class="f1"><div style="font-size:13px;font-weight:500;">'+escHtml(p.txt)+'</div><div class="pch"><span class="chip c-'+ec+'">'+eL(p.est)+'</span><span class="chip c-'+(p.prio==="urgente"?"ur":"no")+'">'+( p.prio==="urgente"?"&#x25B2; Urgente":"&#x25CF; Normal" )+'</span><span class="chip c-pc">'+pct+'%</span>'+fChip(p.fecha)+cChip(p.colabs)+badges+'</div><div style="margin-top:7px;"><div class="plbl">Avance: '+pct+'%</div><div class="pbar"><div class="pfil" style="width:'+pct+'%;background:'+eC(p.est)+'"></div></div></div>'+(p.nota?'<div class="nbox" style="margin-top:6px;">'+escHtml(p.nota)+'</div>':'')+buildChat(p.chat,d.id,gi)+'</div><div style="flex-shrink:0;">'+(canDel?'<button class="bsm b-re" onclick="dgDel('+d.id+','+gi+')">&#x2715;</button>':'')+'</div></div>';
+        ph+='<div class="dgrow '+cls+'"><div style="width:9px;height:9px;border-radius:50%;background:'+eC(p.est)+';flex-shrink:0;margin-top:5px;"></div><div class="f1"><div style="font-size:13px;font-weight:500;">'+escHtml(p.txt)+'</div><div class="pch"><span class="chip c-'+ec+'">'+eL(p.est)+'</span><span class="chip c-'+(p.prio==="urgente"?"ur":"no")+'">'+( p.prio==="urgente"?"&#x25B2; Urgente":"&#x25CF; Normal" )+'</span><span class="chip c-pc">'+pct+'%</span>'+fChip(p.fecha)+horaChip(p.hora)+cChip(p.colabs)+badges+'</div><div style="margin-top:7px;"><div class="plbl">Avance: '+pct+'%</div><div class="pbar"><div class="pfil" style="width:'+pct+'%;background:'+eC(p.est)+'"></div></div></div>'+(p.nota?'<div class="nbox" style="margin-top:6px;">'+escHtml(p.nota)+'</div>':'')+buildChat(p.chat,d.id,gi)+'</div><div style="flex-shrink:0;">'+(canDel?'<button class="bsm b-re" onclick="dgDel('+d.id+','+gi+')">&#x2715;</button>':'')+'</div></div>';
       }
     }
     var dOpts=DIAS.map(function(x,i){return '<option value="'+i+'"'+(i===aD?' selected':'')+'>S'+(i<6?1:2)+' '+x+' '+FECHAS[i]+'</option>';}).join("");
