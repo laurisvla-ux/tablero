@@ -29,10 +29,8 @@
   .metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
   .mc { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; position: relative; overflow: hidden; }
   .mc::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
-  .mc.bl::before { background: var(--blue); }
-  .mc.gr::before { background: var(--green); }
-  .mc.am::before { background: var(--amber); }
-  .mc.pu::before { background: var(--purple); }
+  .mc.bl::before { background: var(--blue); } .mc.gr::before { background: var(--green); }
+  .mc.am::before { background: var(--amber); } .mc.pu::before { background: var(--purple); }
   .mc-lbl { font-size: 10px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
   .mc-val { font-size: 22px; font-weight: 600; font-family: var(--mono); }
   .mc-val.bl { color: var(--blue); } .mc-val.gr { color: var(--green); } .mc-val.am { color: var(--amber); } .mc-val.pu { color: var(--purple); }
@@ -73,7 +71,6 @@
   .bar-bg { background: #e3e7ef; border-radius: 3px; height: 4px; width: 70px; display: inline-block; vertical-align: middle; }
   .bar-fill { height: 4px; border-radius: 3px; }
   .pct { font-size: 11px; font-family: var(--mono); margin-left: 5px; color: var(--muted); }
-
   .footer { text-align: center; padding: 14px; color: var(--muted); font-size: 11px; border-top: 1px solid var(--border); }
 </style>
 </head>
@@ -87,7 +84,7 @@
       <div class="t-sub">Seguimiento de inversión y utilidades</div>
     </div>
   </div>
-  <div class="badge">4 Mayo 2026</div>
+  <div class="badge">14 Mayo 2026</div>
 </div>
 
 <div class="main">
@@ -103,24 +100,24 @@
     </div>
     <div class="mc gr">
       <div class="mc-lbl">Recuperado</div>
-      <div class="mc-val gr">$46.5M</div>
+      <div class="mc-val gr">$47.6M</div>
       <div class="mc-sub">de $57.1M aportados</div>
-      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:81.4%;background:var(--green);"></div></div>
-      <div class="mc-pct" style="color:var(--green);">81.4% recuperado</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:83.4%;background:var(--green);"></div></div>
+      <div class="mc-pct" style="color:var(--green);">83.4% recuperado</div>
     </div>
     <div class="mc am">
       <div class="mc-lbl">Utilidad esperada</div>
-      <div class="mc-val am">$72.4M</div>
+      <div class="mc-val am">$71.7M</div>
       <div class="mc-sub">sobre lo invertido</div>
       <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:100%;background:var(--amber);"></div></div>
-      <div class="mc-pct" style="color:var(--amber);">126.8% sobre lo invertido</div>
+      <div class="mc-pct" style="color:var(--amber);">125.6% sobre lo invertido</div>
     </div>
     <div class="mc pu">
       <div class="mc-lbl">Utilidad cobrada</div>
-      <div class="mc-val pu">$21.0M</div>
+      <div class="mc-val pu">$21.3M</div>
       <div class="mc-sub">de $57.1M invertidos</div>
-      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:36.8%;background:var(--purple);"></div></div>
-      <div class="mc-pct" style="color:var(--purple);">36.8% sobre lo invertido</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:37.2%;background:var(--purple);"></div></div>
+      <div class="mc-pct" style="color:var(--purple);">37.2% sobre lo invertido</div>
     </div>
   </div>
 
@@ -157,14 +154,9 @@
       <table>
         <thead>
           <tr>
-            <th>Municipio</th>
-            <th>Aportación</th>
-            <th>Recuperado</th>
-            <th>Avance inversión</th>
-            <th>Estado</th>
-            <th>Util. esperada</th>
-            <th>Util. cobrada</th>
-            <th>Avance utilidad</th>
+            <th>Municipio</th><th>Aportación</th><th>Recuperado</th>
+            <th>Avance inversión</th><th>Estado</th>
+            <th>Util. esperada</th><th>Util. cobrada</th><th>Avance utilidad</th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
@@ -174,72 +166,63 @@
 
 </div>
 
-<div class="footer">Corte: 4 de mayo de 2026 · Hoja GENERAL del informe mensual</div>
+<div class="footer">Corte: 14 de mayo de 2026 · Hoja GENERAL del informe mensual</div>
 
 <script>
 const DATA = [
-  { m:'Balancán',         ap:1000000,   rec:289151.78,      avI:28.92, stI:'Parcial',       ue:0,            uc:0,           avU:0     },
-  { m:'Centla',           ap:3000000,   rec:2853739.74,     avI:95.12, stI:'Parcial',       ue:778739.74,    uc:0,           avU:0     },
-  { m:'Comalcalco',       ap:53000,     rec:169907.38,      avI:100,   stI:'Recuperado',    ue:116907.38,    uc:116907.38,   avU:100   },
-  { m:'Durango',          ap:5000000,   rec:0,              avI:0,     stI:'Sin recuperar', ue:0,            uc:0,           avU:0     },
-  { m:'Ensenada',         ap:0,         rec:0,              avI:0,     stI:'Sin inversión', ue:0,            uc:0,           avU:0     },
-  { m:'Jalapa',           ap:900000,    rec:413263.04,      avI:45.92, stI:'Parcial',       ue:0,            uc:0,           avU:0     },
-  { m:'Jalpa de Méndez',  ap:1500000,   rec:1253431.45,     avI:83.56, stI:'Parcial',       ue:0,            uc:0,           avU:0     },
-  { m:'Jonuta',           ap:1575000,   rec:1107468.35,     avI:70.32, stI:'Parcial',       ue:0,            uc:0,           avU:0     },
-  { m:'Mérida',           ap:2000000,   rec:3947686.56,     avI:100,   stI:'Recuperado',    ue:3163217.46,   uc:1947686.56,  avU:61.57 },
-  { m:'Nacajuca',         ap:0,         rec:0,              avI:0,     stI:'Sin inversión', ue:1095045.03,   uc:1095045.03,  avU:100   },
-  { m:'Naucalpan',        ap:3000000,   rec:10742197.02,    avI:100,   stI:'Recuperado',    ue:7742196.02,   uc:7742196.02,  avU:100   },
-  { m:'Paraíso',          ap:0,         rec:0,              avI:0,     stI:'Sin inversión', ue:10468440.50,  uc:3937679.35,  avU:37.61 },
-  { m:'Pichucalco',       ap:3000000,   rec:2438247.86,     avI:81.27, stI:'Parcial',       ue:253295.63,    uc:0,           avU:0     },
-  { m:'Playa del Carmen', ap:6000000,   rec:3776147.98,     avI:62.94, stI:'Parcial',       ue:1153738.25,   uc:0,           avU:0     },
-  { m:'Tuxtla',           ap:3500000,   rec:4536746.55,     avI:100,   stI:'Recuperado',    ue:5657491.72,   uc:1036746.55,  avU:18.33 },
-  { m:'Teapa',            ap:5240000,   rec:7487339.84,     avI:100,   stI:'Recuperado',    ue:6257011.08,   uc:2247339.84,  avU:35.92 },
-  { m:'Tenosique',        ap:0,         rec:0,              avI:0,     stI:'Sin inversión', ue:1007875.31,   uc:0,           avU:0     },
-  { m:'Tulum',            ap:1500000,   rec:0,              avI:0,     stI:'Sin recuperar', ue:0,            uc:0,           avU:0     },
-  { m:'Xochimilco',       ap:4000000,   rec:6846881.55,     avI:100,   stI:'Recuperado',    ue:24903411.88,  uc:2846881.55,  avU:11.43 },
-  { m:'Veracruz',         ap:13790000,  rec:200467.36,      avI:1.45,  stI:'Parcial',       ue:9834372.07,   uc:0,           avU:0     },
-  { m:'Zitácuaro',        ap:2000000,   rec:411623.56,      avI:20.58, stI:'Parcial',       ue:0,            uc:0,           avU:0     },
+  { m:'Balancán',         ap:1000000,   rec:289151.78,   avI:28.92, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
+  { m:'Centla',           ap:3000000,   rec:2853739.74,  avI:95.12, stI:'Parcial',       ue:778739.74,   uc:0,          avU:0     },
+  { m:'Comalcalco',       ap:53000,     rec:169907.38,   avI:100,   stI:'Recuperado',    ue:116907.38,   uc:116907.38,  avU:100   },
+  { m:'Durango',          ap:5000000,   rec:0,           avI:0,     stI:'Sin recuperar', ue:0,           uc:0,          avU:0     },
+  { m:'Ensenada',         ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:0,           uc:0,          avU:0     },
+  { m:'Jalapa',           ap:900000,    rec:413263.04,   avI:45.92, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
+  { m:'Jalpa de Méndez',  ap:1500000,   rec:1253431.45,  avI:83.56, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
+  { m:'Jonuta',           ap:1575000,   rec:1107468.35,  avI:70.32, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
+  { m:'Mérida',           ap:2000000,   rec:3947686.56,  avI:100,   stI:'Recuperado',    ue:3163217.46,  uc:1947686.56, avU:61.57 },
+  { m:'Nacajuca',         ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:1095045.03,  uc:1095045.03, avU:100   },
+  { m:'Naucalpan',        ap:3000000,   rec:10742197.02, avI:100,   stI:'Recuperado',    ue:7742196.02,  uc:7742196.02, avU:100   },
+  { m:'Paraíso',          ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:10468440.50, uc:3937679.35, avU:37.61 },
+  { m:'Pichucalco',       ap:3000000,   rec:2438247.86,  avI:81.27, stI:'Parcial',       ue:253295.63,   uc:0,          avU:0     },
+  { m:'Playa del Carmen', ap:6000000,   rec:4007230.24,  avI:66.79, stI:'Parcial',       ue:1153738.25,  uc:0,          avU:0     },
+  { m:'Tuxtla',           ap:3500000,   rec:4536746.55,  avI:100,   stI:'Recuperado',    ue:5657491.72,  uc:1036746.55, avU:18.33 },
+  { m:'Teapa',            ap:5240000,   rec:7768981.01,  avI:100,   stI:'Recuperado',    ue:6257011.08,  uc:2528981.01, avU:40.42 },
+  { m:'Tenosique',        ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:1007875.31,  uc:0,          avU:0     },
+  { m:'Tulum',            ap:1500000,   rec:0,           avI:0,     stI:'Sin recuperar', ue:0,           uc:0,          avU:0     },
+  { m:'Xochimilco',       ap:4000000,   rec:6846881.55,  avI:100,   stI:'Recuperado',    ue:24903411.88, uc:2846881.55, avU:11.43 },
+  { m:'Veracruz',         ap:13790000,  rec:788389.67,   avI:5.72,  stI:'Parcial',       ue:9098728.07,  uc:0,          avU:0     },
+  { m:'Zitácuaro',        ap:2000000,   rec:411623.56,   avI:20.58, stI:'Parcial',       ue:0,           uc:0,          avU:0     },
 ];
 
-let filter = 'todos';
-function fx(v) { if(!v||v===0) return '—'; return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':'$'+Math.round(v/1000)+'K'; }
-function bc(p) { return p>=100?'#16a34a':p>=50?'#d97706':'#dc2626'; }
-function bar(p,c) { return `<div style="display:inline-flex;align-items:center;gap:5px;"><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(p,100)}%;background:${c};"></div></div><span class="pct">${Math.round(p)}%</span></div>`; }
-function pill(s) {
-  if(s==='Recuperado') return `<span class="pill pg">Recuperado</span>`;
-  if(s==='Parcial') return `<span class="pill pa">Parcial</span>`;
-  if(s==='Sin inversión') return `<span class="pill pi">Sin inversión</span>`;
-  return `<span class="pill pr">Sin recuperar</span>`;
+let filter='todos';
+function fx(v){if(!v||v===0)return'—';return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':'$'+Math.round(v/1000)+'K';}
+function bc(p){return p>=100?'#16a34a':p>=50?'#d97706':'#dc2626';}
+function bar(p,c){return`<div style="display:inline-flex;align-items:center;gap:5px;"><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(p,100)}%;background:${c};"></div></div><span class="pct">${Math.round(p)}%</span></div>`;}
+function pill(s){
+  if(s==='Recuperado')return`<span class="pill pg">Recuperado</span>`;
+  if(s==='Parcial')return`<span class="pill pa">Parcial</span>`;
+  if(s==='Sin inversión')return`<span class="pill pi">Sin inversión</span>`;
+  return`<span class="pill pr">Sin recuperar</span>`;
 }
-
-function render(data) {
-  document.getElementById('tbody').innerHTML = data.map(d=>`<tr>
+function render(data){
+  document.getElementById('tbody').innerHTML=data.map(d=>`<tr>
     <td class="mn">${d.m}</td>
     <td class="mo">${d.ap>0?fx(d.ap):'—'}</td>
     <td class="mo">${d.rec>0?fx(d.rec):'—'}</td>
-    <td>${d.stI==='Sin inversión'?'<span style="color:#e3e7ef;font-size:11px;">—</span>':bar(d.avI,bc(d.avI))}</td>
+    <td>${d.stI==='Sin inversión'?'<span style="color:#e3e7ef;">—</span>':bar(d.avI,bc(d.avI))}</td>
     <td>${pill(d.stI)}</td>
     <td class="mo">${d.ue>0?fx(d.ue):'—'}</td>
     <td class="mo">${d.uc>0?fx(d.uc):'—'}</td>
     <td>${d.ue>0?bar(d.avU,bc(d.avU)):'<span style="color:#e3e7ef;">—</span>'}</td>
   </tr>`).join('');
 }
-
-function setFilter(v,btn) {
-  filter=v;
-  document.querySelectorAll('.fb').forEach(b=>b.className='fb');
-  btn.classList.add('on');
-  filterTable();
-}
-
-function filterTable() {
+function setFilter(v,btn){filter=v;document.querySelectorAll('.fb').forEach(b=>b.className='fb');btn.classList.add('on');filterTable();}
+function filterTable(){
   const q=document.getElementById('search').value.toLowerCase();
   let d=DATA;
-  if(filter!=='todos') d=d.filter(x=>x.stI===filter);
-  if(q) d=d.filter(x=>x.m.toLowerCase().includes(q));
+  if(filter!=='todos')d=d.filter(x=>x.stI===filter);
+  if(q)d=d.filter(x=>x.m.toLowerCase().includes(q));
   render(d);
 }
-
 render(DATA);
 
 const sorted=[...DATA].filter(d=>d.stI!=='Sin inversión').sort((a,b)=>b.avI-a.avI);
