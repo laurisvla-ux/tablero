@@ -270,8 +270,8 @@ function savePends(id,p){
 }
 function subDir(id,cb){DB.ref(SK+"/dir_"+id).on("value",function(s){var v=s.val();cache[id]=Array.isArray(v)?v:[];cb();});}
 function subAll(cb){
-  if(!currentSK)currentSK=SK;
-  DB.ref(currentSK).on("value",function(s){
+  currentSK=SK;
+  DB.ref(SK).on("value",function(s){
     var v=s.val()||{};
     DM.forEach(function(d){cache[d.id]=Array.isArray(v["dir_"+d.id])?v["dir_"+d.id]:[];});
     cb();
@@ -533,9 +533,7 @@ function renderDG(){
     tU+=p.filter(function(x){return x.prio==="urgente";}).length;
     tN+=p.filter(function(x){return !x.prio||x.prio==="normal";}).length;
   });
-  var sems=getUltimasSemanas();
-  var semOpts=sems.map(function(s){return '<option value="'+s.sk+'"'+(s.sk===(currentSK||SK)?' selected':'')+'>'+s.label+'</option>';}).join("");
-  var weekSel='<div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap;justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><div><div style="font-size:20px;font-weight:600;">Tablero de pendientes</div><div style="font-size:13px;color:var(--t2);margin-top:3px;">Vista consolidada</div></div><select onchange="loadWeek(this.value)" style="width:auto;margin:0;padding:6px 12px;font-size:13px;border-radius:var(--rs);border:1px solid var(--bd);font-family:DM Sans,sans-serif;cursor:pointer;">'+semOpts+'</select></div><button onclick="abrirAviso()" style="padding:8px 16px;background:var(--t);color:#fff;border:none;border-radius:var(--rs);font-family:DM Sans,sans-serif;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;">&#x1F4E2; Enviar aviso</button></div>';
+  var weekSel='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:10px;"><div><div style="font-size:20px;font-weight:600;">Tablero de pendientes</div><div style="font-size:13px;color:var(--t2);margin-top:3px;">Vista consolidada · '+SEMLAB+'</div></div><button onclick="abrirAviso()" style="padding:8px 16px;background:var(--t);color:#fff;border:none;border-radius:var(--rs);font-family:DM Sans,sans-serif;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;">&#x1F4E2; Enviar aviso</button></div>';
   var cards=DM.map(function(d){
     var pends=getPends(d.id);
     var rP=pends.filter(function(p){return p.est==="pendiente";}).length;
