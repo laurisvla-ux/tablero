@@ -100,10 +100,10 @@
     </div>
     <div class="mc gr">
       <div class="mc-lbl">Recuperado</div>
-      <div class="mc-val gr">$51.5M</div>
+      <div class="mc-val gr">$52.2M</div>
       <div class="mc-sub">de $57.1M aportados</div>
-      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:90.3%;background:var(--green);"></div></div>
-      <div class="mc-pct" style="color:var(--green);">90.3% recuperado</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:91.4%;background:var(--green);"></div></div>
+      <div class="mc-pct" style="color:var(--green);">91.4% recuperado</div>
     </div>
     <div class="mc am">
       <div class="mc-lbl">Utilidad esperada</div>
@@ -114,10 +114,10 @@
     </div>
     <div class="mc pu">
       <div class="mc-lbl">Utilidad cobrada</div>
-      <div class="mc-val pu">$23.8M</div>
+      <div class="mc-val pu">$24.3M</div>
       <div class="mc-sub">de $57.1M invertidos</div>
-      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:41.7%;background:var(--purple);"></div></div>
-      <div class="mc-pct" style="color:var(--purple);">41.7% sobre lo invertido</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:42.5%;background:var(--purple);"></div></div>
+      <div class="mc-pct" style="color:var(--purple);">42.5% sobre lo invertido</div>
     </div>
   </div>
 
@@ -145,8 +145,8 @@
     </div>
     <div class="filter-row">
       <button class="fb on" onclick="setFilter('todos',this)">Todos (20)</button>
-      <button class="fb" onclick="setFilter('Recuperado',this)">✓ Recuperado (6)</button>
-      <button class="fb" onclick="setFilter('Parcial',this)">~ Parcial (9)</button>
+      <button class="fb" onclick="setFilter('Recuperado',this)">✓ Recuperado (7)</button>
+      <button class="fb" onclick="setFilter('Parcial',this)">~ Parcial (8)</button>
       <button class="fb" onclick="setFilter('Sin recuperar',this)">✗ Sin recuperar (2)</button>
       <button class="fb" onclick="setFilter('Sin inversión',this)">○ Sin inversión (3)</button>
     </div>
@@ -176,7 +176,7 @@ const DATA = [
   { m:'Durango',          ap:5000000,   rec:0,           avI:0,     stI:'Sin recuperar', ue:0,            uc:0,          avU:0     },
   { m:'Ensenada',         ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:0,            uc:0,          avU:0     },
   { m:'Jalapa',           ap:900000,    rec:413263.04,   avI:45.92, stI:'Parcial',       ue:0,            uc:0,          avU:0     },
-  { m:'Jalpa de Méndez',  ap:1500000,   rec:1253431.45,  avI:83.56, stI:'Parcial',       ue:2154056.74,   uc:0,          avU:0     },
+  { m:'Jalpa de Méndez',  ap:1500000,   rec:1973619.04,  avI:100,   stI:'Recuperado',    ue:2154056.74,   uc:473619.04,  avU:21.99 },
   { m:'Jonuta',           ap:1575000,   rec:1256360.23,  avI:79.77, stI:'Parcial',       ue:0,            uc:0,          avU:0     },
   { m:'Mérida',           ap:2000000,   rec:4812825.64,  avI:100,   stI:'Recuperado',    ue:4560703.59,   uc:2812825.64, avU:61.68 },
   { m:'Nacajuca',         ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:1095045.03,   uc:1095045.03, avU:100   },
@@ -193,7 +193,7 @@ const DATA = [
 ];
 
 let filter='todos';
-function fx(v){if(!v||v===0)return'—';return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':'$'+Math.round(v/1000)+'K';}
+function fx(v){if(!v||v===0)return'—';return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':'$'+Math.round(v/1000).toLocaleString('es-MX')+' mil';}
 function bc(p){return p>=100?'#16a34a':p>=50?'#d97706':'#dc2626';}
 function bar(p,c){return`<div style="display:inline-flex;align-items:center;gap:5px;"><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(p,100)}%;background:${c};"></div></div><span class="pct">${Math.round(p)}%</span></div>`;}
 function pill(s){
