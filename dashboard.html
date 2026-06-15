@@ -84,7 +84,7 @@
       <div class="t-sub">Seguimiento de inversión y utilidades</div>
     </div>
   </div>
-  <div class="badge">8 Junio 2026</div>
+  <div class="badge">15 Junio 2026</div>
 </div>
 
 <div class="main">
@@ -94,30 +94,30 @@
     <div class="mc bl">
       <div class="mc-lbl">Aportación total</div>
       <div class="mc-val bl">$57.1M</div>
-      <div class="mc-sub">21 municipios activos</div>
+      <div class="mc-sub">20 municipios activos</div>
       <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:100%;background:var(--blue);"></div></div>
       <div class="mc-pct" style="color:var(--blue);">100% base de inversión</div>
     </div>
     <div class="mc gr">
       <div class="mc-lbl">Recuperado</div>
-      <div class="mc-val gr">$50.4M</div>
+      <div class="mc-val gr">$51.5M</div>
       <div class="mc-sub">de $57.1M aportados</div>
-      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:88.3%;background:var(--green);"></div></div>
-      <div class="mc-pct" style="color:var(--green);">88.3% recuperado</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:90.3%;background:var(--green);"></div></div>
+      <div class="mc-pct" style="color:var(--green);">90.3% recuperado</div>
     </div>
     <div class="mc am">
       <div class="mc-lbl">Utilidad esperada</div>
-      <div class="mc-val am">$73.6M</div>
+      <div class="mc-val am">$73.9M</div>
       <div class="mc-sub">sobre lo invertido</div>
       <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:100%;background:var(--amber);"></div></div>
-      <div class="mc-pct" style="color:var(--amber);">128.9% sobre lo invertido</div>
+      <div class="mc-pct" style="color:var(--amber);">129.5% sobre lo invertido</div>
     </div>
     <div class="mc pu">
       <div class="mc-lbl">Utilidad cobrada</div>
-      <div class="mc-val pu">$22.9M</div>
+      <div class="mc-val pu">$23.8M</div>
       <div class="mc-sub">de $57.1M invertidos</div>
-      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:40.1%;background:var(--purple);"></div></div>
-      <div class="mc-pct" style="color:var(--purple);">40.1% sobre lo invertido</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:41.7%;background:var(--purple);"></div></div>
+      <div class="mc-pct" style="color:var(--purple);">41.7% sobre lo invertido</div>
     </div>
   </div>
 
@@ -125,7 +125,7 @@
   <div class="charts">
     <div class="card">
       <div class="card-title">Avance recuperación de inversión (%)</div>
-      <div style="position:relative;height:340px;"><canvas id="cRec"></canvas></div>
+      <div style="position:relative;height:320px;"><canvas id="cRec"></canvas></div>
     </div>
     <div class="card">
       <div class="card-title">Utilidad esperada vs cobrada (MDP)</div>
@@ -133,7 +133,7 @@
         <div class="leg"><div class="leg-sq" style="background:#2563eb;"></div>Esperada</div>
         <div class="leg"><div class="leg-sq" style="background:#16a34a;"></div>Cobrada</div>
       </div>
-      <div style="position:relative;height:316px;"><canvas id="cUtil"></canvas></div>
+      <div style="position:relative;height:296px;"><canvas id="cUtil"></canvas></div>
     </div>
   </div>
 
@@ -144,11 +144,11 @@
       <input class="search" id="search" placeholder="Buscar..." oninput="filterTable()">
     </div>
     <div class="filter-row">
-      <button class="fb on" onclick="setFilter('todos',this)">Todos (21)</button>
+      <button class="fb on" onclick="setFilter('todos',this)">Todos (20)</button>
       <button class="fb" onclick="setFilter('Recuperado',this)">✓ Recuperado (6)</button>
       <button class="fb" onclick="setFilter('Parcial',this)">~ Parcial (9)</button>
       <button class="fb" onclick="setFilter('Sin recuperar',this)">✗ Sin recuperar (2)</button>
-      <button class="fb" onclick="setFilter('Sin inversión',this)">○ Sin inversión (4)</button>
+      <button class="fb" onclick="setFilter('Sin inversión',this)">○ Sin inversión (3)</button>
     </div>
     <div class="twrap">
       <table>
@@ -166,7 +166,7 @@
 
 </div>
 
-<div class="footer">Corte: 8 de junio de 2026 · Hoja GENERAL del informe mensual</div>
+<div class="footer">Corte: 15 de junio de 2026 · Hoja GENERAL del informe mensual</div>
 
 <script>
 const DATA = [
@@ -177,19 +177,18 @@ const DATA = [
   { m:'Ensenada',         ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:0,            uc:0,          avU:0     },
   { m:'Jalapa',           ap:900000,    rec:413263.04,   avI:45.92, stI:'Parcial',       ue:0,            uc:0,          avU:0     },
   { m:'Jalpa de Méndez',  ap:1500000,   rec:1253431.45,  avI:83.56, stI:'Parcial',       ue:2154056.74,   uc:0,          avU:0     },
-  { m:'Jonuta',           ap:1575000,   rec:1107468.35,  avI:70.32, stI:'Parcial',       ue:0,            uc:0,          avU:0     },
-  { m:'Mérida',           ap:2000000,   rec:4393579.80,  avI:100,   stI:'Recuperado',    ue:4560703.59,   uc:2393579.80, avU:52.48 },
+  { m:'Jonuta',           ap:1575000,   rec:1256360.23,  avI:79.77, stI:'Parcial',       ue:0,            uc:0,          avU:0     },
+  { m:'Mérida',           ap:2000000,   rec:4812825.64,  avI:100,   stI:'Recuperado',    ue:4560703.59,   uc:2812825.64, avU:61.68 },
   { m:'Nacajuca',         ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:1095045.03,   uc:1095045.03, avU:100   },
   { m:'Naucalpan',        ap:3000000,   rec:10742197.02, avI:100,   stI:'Recuperado',    ue:7742196.02,   uc:7742196.02, avU:100   },
   { m:'Paraíso',          ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:10468440.50,  uc:4425683.18, avU:42.28 },
   { m:'Pichucalco',       ap:3000000,   rec:2828096.82,  avI:94.27, stI:'Parcial',       ue:253295.63,    uc:0,          avU:0     },
   { m:'Playa del Carmen', ap:6000000,   rec:4353853.62,  avI:72.56, stI:'Parcial',       ue:1153738.25,   uc:0,          avU:0     },
   { m:'Tuxtla',           ap:3500000,   rec:4536746.55,  avI:100,   stI:'Recuperado',    ue:5657491.72,   uc:1036746.55, avU:18.33 },
-  { m:'Teapa',            ap:5240000,   rec:8435255.41,  avI:100,   stI:'Recuperado',    ue:6257011.08,   uc:3195255.41, avU:51.07 },
-  { m:'Tenosique',        ap:0,         rec:0,           avI:0,     stI:'Sin inversión', ue:0,            uc:0,          avU:0     },
+  { m:'Teapa',            ap:5240000,   rec:8942971.29,  avI:100,   stI:'Recuperado',    ue:6257011.08,   uc:3702971.29, avU:59.18 },
   { m:'Tulum',            ap:1500000,   rec:0,           avI:0,     stI:'Sin recuperar', ue:0,            uc:0,          avU:0     },
   { m:'Xochimilco',       ap:4000000,   rec:6846881.55,  avI:100,   stI:'Recuperado',    ue:24903411.88,  uc:2846881.55, avU:11.43 },
-  { m:'Veracruz',         ap:13790000,  rec:1704852.23,  avI:12.36, stI:'Parcial',       ue:9098728.07,   uc:0,          avU:0     },
+  { m:'Veracruz',         ap:13790000,  rec:1704852.23,  avI:12.36, stI:'Parcial',       ue:9386298.07,   uc:0,          avU:0     },
   { m:'Zitácuaro',        ap:2000000,   rec:411623.56,   avI:20.58, stI:'Parcial',       ue:0,            uc:0,          avU:0     },
 ];
 
