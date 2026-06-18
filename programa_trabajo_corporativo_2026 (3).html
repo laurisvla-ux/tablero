@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programa de Trabajo — Corporativo 2026</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink: #0a0c10;
+  --ink2: #2d3140;
+  --ink3: #525968;
+  --bg: #f4f5f8;
+  --surface: #ffffff;
+  --surface2: #f9fafb;
+  --border: rgba(0,0,0,0.10);
+  --border2: rgba(0,0,0,0.16);
+
+  --blue: #1d4ed8;
+  --blue-pale: #eff4ff;
+  --blue-mid: #93b4fd;
+  --green: #047857;
+  --green-pale: #ecfdf5;
+  --green-mid: #6ee7b7;
+  --purple: #6d28d9;
+  --purple-pale: #f5f3ff;
+  --orange: #b45309;
+  --orange-pale: #fffbeb;
+  --red: #b91c1c;
+
+  --r: 10px;
+  --r-sm: 6px;
+  --font: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  font-size: 14.5px;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+.hdr {
+  background: #080c14;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.hdr-accent {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb 0%, #7c3aed 50%, #059669 100%);
+}
+.hdr-glow-a {
+  position: absolute;
+  top: -120px; right: -60px;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hdr-glow-b {
+  position: absolute;
+  bottom: -80px; left: 10%;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(5,150,105,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hdr-inner {
+  position: relative;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 52px 48px 44px;
+}
+.hdr-eyebrow {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #4b80d4;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hdr-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 20px; height: 1px;
+  background: #2563eb;
+}
+.hdr h1 {
+  font-size: 38px;
+  font-weight: 200;
+  color: #fff;
+  line-height: 1.15;
+  max-width: 620px;
+  margin-bottom: 8px;
+  letter-spacing: -.5px;
+}
+.hdr h1 strong {
+  font-weight: 600;
+  color: #fff;
+}
+.hdr h1 em {
+  font-style: normal;
+  color: #4b80d4;
+}
+.hdr-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 36px;
+  letter-spacing: .04em;
+}
+.hdr-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin-bottom: 32px;
+}
+.hdr-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+.hdr-metric {
+  background: rgba(255,255,255,0.03);
+  padding: 16px 18px;
+}
+.hdr-metric:hover { background: rgba(255,255,255,0.06); }
+.hdr-metric-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+.hdr-metric-val {
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.hdr-metric-val.bl { color: #6ea3ff; }
+.hdr-metric-val.gn { color: #4ade80; }
+.hdr-metric-val.pr { color: #c4b5fd; }
+.hdr-metric-val.or { color: #fcd34d; }
+.hdr-metric-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.4;
+}
+.hdr-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono);
+  font-size: 13px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+  padding: 5px 11px;
+  border-radius: 100px;
+  letter-spacing: .04em;
+}
+.chip i { font-size: 12.5px; color: #6ea3ff; }
+
+/* ── BODY ── */
+.body { max-width: 1060px; margin: 0 auto; padding: 40px 40px 80px; }
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  margin: 44px 0 18px;
+}
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+
+/* ── SAVE BANNER ── */
+.save-banner {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--green-pale);
+  border: 1px solid #a7f3d0;
+  border-left: 3px solid var(--green);
+  border-radius: var(--r);
+  padding: 14px 18px;
+  font-size: 12.5px;
+  color: #065f46;
+  margin-top: 28px;
+}
+.save-banner i { font-size: 18px; color: var(--green); flex-shrink: 0; margin-top: 1px; }
+
+/* ── KPI CARDS ── */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px,1fr)); gap: 12px; }
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px 18px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--r) var(--r) 0 0;
+}
+.kpi.blue::before  { background: var(--blue); }
+.kpi.green::before { background: var(--green); }
+.kpi.purple::before{ background: var(--purple); }
+.kpi.orange::before{ background: var(--orange); }
+.kpi-label { font-size: 13px; font-family: var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink3); margin-bottom: 8px; }
+.kpi-val { font-size: 26px; font-weight: 600; line-height: 1; margin-bottom: 4px; }
+.kpi.blue .kpi-val   { color: var(--blue); }
+.kpi.green .kpi-val  { color: var(--green); }
+.kpi.purple .kpi-val { color: var(--purple); }
+.kpi.orange .kpi-val { color: var(--orange); }
+.kpi-sub { font-size: 12.5px; color: var(--ink3); line-height: 1.45; }
+
+/* ── PHASES ── */
+.phases { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px,1fr)); gap: 12px; }
+.phase {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+}
+.phase-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.phase-num {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+}
+.phase.blue  .phase-num { background: var(--blue-pale); color: var(--blue); }
+.phase.green .phase-num { background: var(--green-pale); color: var(--green); }
+.phase.purple .phase-num { background: var(--purple-pale); color: var(--purple); }
+.phase.orange .phase-num { background: var(--orange-pale); color: var(--orange); }
+.phase-date { font-family: var(--mono); font-size: 12.5px; color: var(--ink3); text-align: right; line-height: 1.4; }
+.phase-title { font-weight: 600; font-size: 13px; margin-bottom: 3px; }
+.phase-sub { font-size: 12.5px; color: var(--ink3); margin-bottom: 12px; }
+.phase ul { list-style: none; padding: 0; }
+.phase ul li {
+  font-size: 13px; color: var(--ink2);
+  padding: 3px 0 3px 14px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.phase ul li:last-child { border-bottom: none; }
+.phase ul li::before {
+  content: '';
+  position: absolute; left: 0; top: 10px;
+  width: 5px; height: 5px; border-radius: 50%;
+}
+.phase.blue  li::before { background: var(--blue); }
+.phase.green li::before { background: var(--green); }
+.phase.purple li::before { background: var(--purple); }
+.phase.orange li::before { background: var(--orange); }
+
+/* ── GANTT ── */
+.gantt-wrap { overflow-x: auto; border-radius: var(--r); border: 1px solid var(--border); background: var(--surface); }
+table.gantt { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 13px; }
+table.gantt thead th {
+  padding: 10px 10px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border2);
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+table.gantt thead th:first-child { text-align: left; min-width: 210px; padding-left: 16px; }
+table.gantt tbody tr { border-bottom: 1px solid var(--border); }
+table.gantt tbody tr:hover td { background: #f6f8ff; }
+table.gantt tbody td { padding: 5px 8px; border-right: 1px solid var(--border); vertical-align: middle; }
+table.gantt tbody td:first-child { font-size: 13px; font-weight: 400; color: var(--ink2); padding-left: 16px; white-space: nowrap; }
+table.gantt td.mc { text-align: center; }
+
+.bar { display: block; height: 12px; border-radius: 100px; margin: 0 auto; }
+.bar.bl { background: var(--blue); }
+.bar.gn { background: var(--green); }
+.bar.pr { background: var(--purple); }
+.bar.or { background: var(--orange); }
+.bar.dim { opacity: 0.28; }
+
+.g-ms td {
+  background: #f4f5f8 !important;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: .06em;
+  color: var(--ink3) !important;
+  font-weight: 500;
+  padding: 6px 10px 6px 16px !important;
+  border-top: 1px solid var(--border2);
+}
+
+/* ── STAFF TABLE ── */
+.staff-wrap { border-radius: var(--r); border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+table.staff { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.staff thead th { background: var(--purple); color: #fff; font-size: 13px; font-family: var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 10px 14px; text-align: left; font-weight: 500; }
+table.staff tbody tr { border-bottom: 1px solid var(--border); }
+table.staff tbody tr:hover td { background: var(--purple-pale); }
+table.staff tbody td { padding: 9px 14px; }
+table.staff tbody td.r { text-align: right; font-family: var(--mono); font-size: 13px; }
+table.staff tfoot td { background: var(--surface2); border-top: 2px solid var(--purple); padding: 10px 14px; font-weight: 600; }
+table.staff tfoot td.r { text-align: right; font-family: var(--mono); }
+
+/* ── BUDGET TABLE ── */
+.budget-wrap { border-radius: var(--r); border: 1px solid var(--border); overflow: hidden; background: var(--surface); }
+table.budget { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.budget thead th { background: var(--ink); color: rgba(255,255,255,0.85); font-size: 13px; font-family: var(--mono); letter-spacing: .07em; text-transform: uppercase; padding: 10px 14px; text-align: right; font-weight: 500; }
+table.budget thead th:first-child { text-align: left; min-width: 230px; }
+table.budget tbody tr { border-bottom: 1px solid var(--border); }
+table.budget tbody tr:hover td { background: var(--surface2); }
+table.budget tbody td { padding: 8px 14px; text-align: right; border-right: 1px solid var(--border); vertical-align: top; }
+table.budget tbody td:first-child { text-align: left; font-weight: 500; }
+table.budget tbody td.note { font-size: 12.5px; color: var(--ink3); text-align: left; font-weight: 400; border-right: none; }
+table.budget .cat-hdr td { background: var(--surface2); font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .1em; padding: 6px 14px; font-weight: 600; border-top: 1px solid var(--border2); }
+table.budget .cat-hdr.bl td { color: var(--blue); }
+table.budget .cat-hdr.gn td { color: var(--green); }
+table.budget .cat-hdr.pr td { color: var(--purple); }
+table.budget .cat-hdr.or td { color: var(--orange); }
+table.budget tfoot td { background: var(--surface2); font-weight: 600; padding: 10px 14px; text-align: right; border-top: 2px solid var(--border2); font-family: var(--mono); font-size: 13px; }
+table.budget tfoot td:first-child { text-align: left; font-family: var(--font); }
+table.budget tfoot tr:last-child td { color: var(--green); }
+table.budget tfoot tr.warn td { color: var(--red); }
+
+.mono { font-family: var(--mono); }
+
+/* ── BADGE ── */
+.badge {
+  display: inline-block;
+  font-size: 13px; font-family: var(--mono); font-weight: 500;
+  padding: 2px 9px; border-radius: 100px;
+}
+.badge.bl { background: var(--blue-pale); color: var(--blue); }
+.badge.gn { background: var(--green-pale); color: var(--green); }
+.badge.pr { background: var(--purple-pale); color: var(--purple); }
+.badge.or { background: var(--orange-pale); color: var(--orange); }
+
+/* ── RISK CARDS ── */
+.risk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px,1fr)); gap: 12px; }
+.risk {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px;
+}
+.risk-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 18px; }
+.risk.or .risk-icon { background: var(--orange-pale); color: var(--orange); }
+.risk.bl .risk-icon { background: var(--blue-pale); color: var(--blue); }
+.risk.gn .risk-icon { background: var(--green-pale); color: var(--green); }
+.risk.pr .risk-icon { background: var(--purple-pale); color: var(--purple); }
+.risk-title { font-weight: 600; font-size: 12.5px; margin-bottom: 5px; }
+.risk-body { font-size: 13px; color: var(--ink3); line-height: 1.5; }
+
+footer {
+  border-top: 1px solid var(--border2);
+  margin-top: 56px; padding-top: 18px;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;
+  font-family: var(--mono); font-size: 13px; color: var(--ink3);
+}
+
+@media print {
+  body { background: white; }
+  .hdr::before, .hdr::after { display: none; }
+  .body { padding: 24px 32px; }
+  .gantt-wrap, .budget-wrap, .staff-wrap { overflow: visible; }
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-accent"></div>
+  <div class="hdr-glow-a"></div>
+  <div class="hdr-glow-b"></div>
+  <div class="hdr-inner">
+    <div class="hdr-eyebrow">Grupo Corporativo · Programa de Trabajo · Confidencial</div>
+    <h1><strong>Estructuración Corporativa</strong></h1>
+    <div class="hdr-sub">Julio – Diciembre 2026 &nbsp;·&nbsp; 15 entidades &nbsp;·&nbsp; CDMX · Mérida · EdoMéx · Tabasco</div>
+    <div class="hdr-divider"></div>
+    <div class="hdr-metrics">
+      <div class="hdr-metric">
+        <div class="hdr-metric-label">Entidades</div>
+        <div class="hdr-metric-val bl">15</div>
+        <div class="hdr-metric-sub">5 princ · 5 sec · 5 físicas</div>
+      </div>
+      <div class="hdr-metric">
+        <div class="hdr-metric-label">Inversión inicial</div>
+        <div class="hdr-metric-val or">$235K</div>
+        <div class="hdr-metric-sub">Constitución + mobiliario</div>
+      </div>
+      <div class="hdr-metric">
+        <div class="hdr-metric-label">Gasto mensual</div>
+        <div class="hdr-metric-val or">$424K</div>
+        <div class="hdr-metric-sub">Operación plena sin impuestos</div>
+      </div>
+      <div class="hdr-metric">
+        <div class="hdr-metric-label">Utilidad mensual</div>
+        <div class="hdr-metric-val gn">$798K</div>
+        <div class="hdr-metric-sub">Con $30 MDP facturación</div>
+      </div>
+      <div class="hdr-metric">
+        <div class="hdr-metric-label">Recuperación</div>
+        <div class="hdr-metric-val gn">Nov '26</div>
+        <div class="hdr-metric-sub">2 meses de operación plena</div>
+      </div>
+      <div class="hdr-metric">
+        <div class="hdr-metric-label">Cierre 2026</div>
+        <div class="hdr-metric-val pr">+$1.42M</div>
+        <div class="hdr-metric-sub">Saldo positivo acumulado</div>
+      </div>
+    </div>
+    <div class="hdr-chips">
+      <span class="chip"><i class="ti ti-building"></i> 10 morales · notario $16K c/u</span>
+      <span class="chip"><i class="ti ti-user"></i> 5 personas físicas · alta SAT directa</span>
+      <span class="chip"><i class="ti ti-users"></i> 14 colaboradores · 4 áreas</span>
+      <span class="chip"><i class="ti ti-calendar-check"></i> Operación plena oct 2026</span>
+      <span class="chip"><i class="ti ti-trending-up"></i> PE: $12.3 MDP/mes</span>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+
+  <!-- KPIs -->
+  <div class="sec-label"><i class="ti ti-layout-dashboard" style="font-size:13px"></i> Resumen ejecutivo</div>
+  <div class="kpi-grid">
+    <div class="kpi blue">
+      <div class="kpi-label">Entidades</div>
+      <div class="kpi-val">15</div>
+      <div class="kpi-sub">5 principales · 5 secundarias · 5 físicas</div>
+    </div>
+    <div class="kpi orange">
+      <div class="kpi-label">Constitución</div>
+      <div class="kpi-val">$160K</div>
+      <div class="kpi-sub">10 morales × $16K · físicas $0</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-label">Nómina mensual</div>
+      <div class="kpi-val">$192K</div>
+      <div class="kpi-sub">14 plazas · 4 áreas · jefes $20K</div>
+    </div>
+    <div class="kpi orange">
+      <div class="kpi-label">Gasto operativo</div>
+      <div class="kpi-val">~$424K</div>
+      <div class="kpi-sub">Nómina + renta + servicios + IMSS</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Utilidad c/ $30M</div>
+      <div class="kpi-val">$798K</div>
+      <div class="kpi-sub">Mensual neta · escenario base</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Recuperación</div>
+      <div class="kpi-val">Nov '26</div>
+      <div class="kpi-sub">2 meses operación plena · +$1M dic</div>
+    </div>
+  </div>
+
+  <!-- FASES -->
+  <div class="sec-label"><i class="ti ti-list-check" style="font-size:13px"></i> Fases del programa</div>
+  <div class="phases">
+    <div class="phase blue">
+      <div class="phase-top">
+        <div class="phase-num">01</div>
+        <div class="phase-date">Jul – Sep<br>2026</div>
+      </div>
+      <div class="phase-title">Constitución morales</div>
+      <div class="phase-sub">10 personas morales vía notario</div>
+      <ul>
+        <li>5 principales + 5 secundarias</li>
+        <li>Reserva denominaciones SAT</li>
+        <li>Escrituras notariales + RPC</li>
+        <li>RFC · e.firma · contraseña</li>
+        <li>Apertura cuentas bancarias</li>
+      </ul>
+    </div>
+    <div class="phase blue">
+      <div class="phase-top">
+        <div class="phase-num">02</div>
+        <div class="phase-date">Jul – Sep<br>2026</div>
+      </div>
+      <div class="phase-title">Personas físicas</div>
+      <div class="phase-sub">5 físicas · sin notario · alta SAT directa</div>
+      <ul>
+        <li>Alta régimen actividad empresarial</li>
+        <li>e.firma y contraseña SAT</li>
+        <li>Cuenta bancaria empresarial</li>
+
+      </ul>
+    </div>
+    <div class="phase orange">
+      <div class="phase-top">
+        <div class="phase-num">03</div>
+        <div class="phase-date">Jul – Sep<br>2026</div>
+      </div>
+      <div class="phase-title">Infraestructura</div>
+      <div class="phase-sub">Oficinas, activos y presencia digital</div>
+      <ul>
+        <li>Renta y acondicionamiento</li>
+        <li>Mobiliario $15K — 5 principales</li>
+        <li>Alta servicios (CFE/agua/internet)</li>
+        <li>Alta de activos en SAT</li>
+        <li>15 páginas web (sin costo)</li>
+      </ul>
+    </div>
+    <div class="phase purple">
+      <div class="phase-top">
+        <div class="phase-num">04</div>
+        <div class="phase-date">Ago – Sep<br>2026</div>
+      </div>
+      <div class="phase-title">Capital humano</div>
+      <div class="phase-sub">Reclutamiento + IMSS</div>
+      <ul>
+        <li>4 jefes de área ($20K c/u)</li>
+        <li>10 operativos ($12K–$15K)</li>
+        <li>Alta IMSS 2–4 por entidad</li>
+        <li>2 con salario mínimo + sueldos bajos</li>
+        <li>Capacitación SAT/CFDI</li>
+      </ul>
+    </div>
+    <div class="phase orange">
+      <div class="phase-top">
+        <div class="phase-num">05</div>
+        <div class="phase-date">Oct – Dic<br>2026</div>
+      </div>
+      <div class="phase-title">Operación plena</div>
+      <div class="phase-sub">Todas las entidades activas</div>
+      <ul>
+        <li>Primeras emisiones CFDI</li>
+        <li>Equipo contable operativo</li>
+        <li>Cumplimiento fiscal mensual</li>
+        <li>Cierre 2026 / proyección 2027</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GANTT -->
+  <div class="sec-label"><i class="ti ti-timeline" style="font-size:13px"></i> Cronograma semanal — Julio a Diciembre 2026</div>
+
+  <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:14px; font-size:13px; color:var(--ink3);">
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--blue);display:inline-block;"></span>Constitución</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--orange);display:inline-block;"></span>Infraestructura</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--purple);display:inline-block;"></span>Capital humano</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--ink3);opacity:.35;display:inline-block;"></span>En paralelo / continuo</span>
+  </div>
+
+  <div class="gantt-wrap">
+  <table class="gantt">
+    <thead>
+      <tr>
+        <th style="min-width:220px">Actividad</th>
+        <th colspan="4" style="background:#1a3060;color:#bcd4ff;font-weight:600;font-size:13px;border-right:2px solid #2a2d36">Julio</th>
+        <th colspan="4" style="background:#1a3060;color:#bcd4ff;font-weight:600;font-size:13px;border-right:2px solid #2a2d36">Agosto</th>
+        <th colspan="4" style="background:#1a3060;color:#bcd4ff;font-weight:600;font-size:13px;border-right:2px solid #2a2d36">Septiembre</th>
+        <th colspan="4" style="background:#1a3060;color:#bcd4ff;font-weight:600;font-size:13px;border-right:2px solid #2a2d36">Octubre</th>
+        <th colspan="4" style="background:#1a3060;color:#bcd4ff;font-weight:600;font-size:13px;border-right:2px solid #2a2d36">Noviembre</th>
+        <th colspan="4" style="background:#1a3060;color:#bcd4ff;font-weight:600;font-size:13px">Diciembre</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th>S1</th><th>S2</th><th>S3</th><th style="border-right:2px solid #2a2d36">S4</th>
+        <th>S1</th><th>S2</th><th>S3</th><th style="border-right:2px solid #2a2d36">S4</th>
+        <th>S1</th><th>S2</th><th>S3</th><th style="border-right:2px solid #2a2d36">S4</th>
+        <th>S1</th><th>S2</th><th>S3</th><th style="border-right:2px solid #2a2d36">S4</th>
+        <th>S1</th><th>S2</th><th>S3</th><th style="border-right:2px solid #2a2d36">S4</th>
+        <th>S1</th><th>S2</th><th>S3</th><th>S4</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="g-ms"><td colspan="25">A — Constitución morales (10) · cadena secuencial real</td></tr>
+
+      <tr>
+        <td>Escrituras notariales + alta accionistas</td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl dim"></span></td>
+        <td class="mc"><span class="bar bl dim"></span></td>
+        <td class="mc"><span class="bar bl dim"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar bl dim"></span></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>e.firma SAT (~1 semana tras notario)</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td></td><td></td>
+        <td style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl dim"></span></td>
+        <td colspan="3" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Alta de activos en SAT (con e.firma lista)</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td></td><td></td>
+        <td style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl dim"></span></td>
+        <td colspan="3" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Alta IMSS (con RFC / alta SAT lista)</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td></td>
+        <td style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl dim"></span></td>
+        <td class="mc"><span class="bar bl dim"></span></td>
+        <td colspan="2" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Apertura cuenta bancaria (~1 semana)</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td></td>
+        <td style="border-right:2px solid var(--border2)"></td>
+        <td></td>
+        <td class="mc"><span class="bar bl dim"></span></td>
+        <td colspan="2" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Verificación domicilio · REPSE · padrones gob.</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="2"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl dim"></span></td>
+        <td colspan="2" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+
+      <tr class="g-ms"><td colspan="25">A2 — Personas físicas (5) · más rápido · operan desde septiembre</td></tr>
+      <tr>
+        <td>Alta SAT + e.firma + activos físicas</td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td colspan="2" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Alta IMSS físicas (al tener RFC)</td>
+        <td colspan="2"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Cuenta bancaria físicas (~1 semana)</td>
+        <td colspan="2"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+
+      <tr class="g-ms"><td colspan="25">B — Infraestructura · en paralelo desde julio S1</td></tr>
+      <tr>
+        <td>Contratación domicilios / oficinas</td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Alta servicios (CFE / agua / internet)</td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Páginas web (15 sitios · en paralelo)</td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar or"></span></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Mobiliario 5 principales</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td class="mc"><span class="bar or"></span></td>
+        <td colspan="2" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+
+      <tr class="g-ms"><td colspan="25">C — Capital humano · capacitación antes de operar</td></tr>
+      <tr>
+        <td>Reclutamiento y contratación jefes</td>
+        <td class="mc"><span class="bar pr"></span></td>
+        <td class="mc"><span class="bar pr"></span></td>
+        <td class="mc"><span class="bar pr"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar pr"></span></td>
+        <td class="mc"><span class="bar pr dim"></span></td>
+        <td colspan="3" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Reclutamiento y contratación operativos</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar pr"></span></td>
+        <td class="mc"><span class="bar pr"></span></td>
+        <td class="mc"><span class="bar pr"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar pr"></span></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td>Capacitación SAT / CFDI / procesos</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar pr"></span></td>
+        <td class="mc"><span class="bar pr"></span></td>
+        <td class="mc"><span class="bar pr"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar pr"></span></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4"></td>
+      </tr>
+
+      <tr class="g-ms"><td colspan="25">D — Operación · físicas desde sep · morales desde oct</td></tr>
+      <tr>
+        <td>Físicas operando al 100% (CFDI)</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+      </tr>
+      <tr>
+        <td>Morales operando al 100% (CFDI)</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc" style="border-right:2px solid var(--border2)"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+      </tr>
+      <tr>
+        <td>Cumplimiento fiscal mensual</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td colspan="3" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td colspan="3" style="border-right:2px solid var(--border2)"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td colspan="3"></td>
+      </tr>
+      <tr>
+        <td>Cierre 2026 · proyecciones 2027</td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="4" style="border-right:2px solid var(--border2)"></td>
+        <td colspan="2"></td>
+        <td class="mc"><span class="bar bl"></span></td>
+        <td class="mc"><span class="bar bl"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- STAFF -->
+  <div class="sec-label"><i class="ti ti-users" style="font-size:13px"></i> Estructura de capital humano</div>
+  <div class="staff-wrap">
+  <table class="staff">
+    <thead>
+      <tr>
+        <th>Área</th>
+        <th>Rol</th>
+        <th>Plazas</th>
+        <th>Sueldo unitario</th>
+        <th>Total mensual</th>
+        <th>Inicio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge pr">Contabilidad</span></td>
+        <td>Jefe de Contabilidad</td>
+        <td class="r">1</td>
+        <td class="r">$20,000</td>
+        <td class="r">$20,000</td>
+        <td>Ago 2026</td>
+      </tr>
+      <tr>
+        <td><span class="badge pr">Contabilidad</span></td>
+        <td>Contadores operativos</td>
+        <td class="r">2</td>
+        <td class="r">$12,000</td>
+        <td class="r">$24,000</td>
+        <td>Sep 2026</td>
+      </tr>
+      <tr>
+        <td><span class="badge gn">Facturación</span></td>
+        <td>Jefe de Facturación</td>
+        <td class="r">1</td>
+        <td class="r">$20,000</td>
+        <td class="r">$20,000</td>
+        <td>Ago 2026</td>
+      </tr>
+      <tr>
+        <td><span class="badge gn">Facturación</span></td>
+        <td>Operativos CFDI</td>
+        <td class="r">2</td>
+        <td class="r">$12,000</td>
+        <td class="r">$24,000</td>
+        <td>Sep 2026</td>
+      </tr>
+      <tr>
+        <td><span class="badge bl">Tesorería</span></td>
+        <td>Jefe de Tesorería</td>
+        <td class="r">1</td>
+        <td class="r">$20,000</td>
+        <td class="r">$20,000</td>
+        <td>Sep 2026</td>
+      </tr>
+      <tr>
+        <td><span class="badge bl">Tesorería</span></td>
+        <td>Operativos tesorería</td>
+        <td class="r">2</td>
+        <td class="r">$12,000</td>
+        <td class="r">$24,000</td>
+        <td>Oct 2026</td>
+      </tr>
+      <tr>
+        <td><span class="badge or">Materialidad</span></td>
+        <td>Jefe de Materialidad</td>
+        <td class="r">1</td>
+        <td class="r">$20,000</td>
+        <td class="r">$20,000</td>
+        <td>Sep 2026</td>
+      </tr>
+      <tr>
+        <td><span class="badge or">Materialidad</span></td>
+        <td>Operativos de materialidad</td>
+        <td class="r">2</td>
+        <td class="r">$15,000</td>
+        <td class="r">$30,000</td>
+        <td>Sep 2026</td>
+      </tr>
+      <tr>
+        <td><span class="badge or">Seguridad</span></td>
+        <td>Agentes de seguridad</td>
+        <td class="r">2</td>
+        <td class="r">$15,000</td>
+        <td class="r">$30,000</td>
+        <td>Oct 2026</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Total nómina mensual — 14 plazas</td>
+        <td class="r">14</td>
+        <td></td>
+        <td class="r">$192,000</td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+  <p style="font-size:13px; color:var(--ink3); margin-top:8px; padding-left:4px;">* No incluye carga social patronal IMSS (~35%). Presupuestar ~$259K mensuales nómina + cuotas obrero-patronales.</p>
+
+  <!-- BUDGET -->
+  <div class="sec-label"><i class="ti ti-report-money" style="font-size:13px"></i> Presupuesto estimado</div>
+  <div class="budget-wrap">
+  <table class="budget">
+    <thead>
+      <tr>
+        <th style="text-align:left">Concepto</th>
+        <th>Unitario</th>
+        <th>Cantidad</th>
+        <th>Frecuencia</th>
+        <th>Total estimado</th>
+        <th style="text-align:left">Notas</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="cat-hdr bl"><td colspan="6"><i class="ti ti-building-community" style="vertical-align:-2px; margin-right:6px"></i>A — Constitución de entidades (one-time)</td></tr>
+      <tr>
+        <td>Constitución notarial + RPC (10 morales)</td>
+        <td class="mono">$16,000</td>
+        <td class="mono">10</td>
+        <td>Única vez</td>
+        <td class="mono"><strong>$160,000</strong></td>
+        <td class="note">Costo fijo por empresa</td>
+      </tr>
+      <tr>
+        <td>Alta SAT personas físicas (5)</td>
+        <td class="mono">$0</td>
+        <td class="mono">5</td>
+        <td>Única vez</td>
+        <td class="mono"><strong>$0</strong></td>
+        <td class="note">Sin notario — alta directa en SAT</td>
+      </tr>
+      <tr>
+        <td>Mobiliario y equipo por oficina</td>
+        <td class="mono">$15,000</td>
+        <td class="mono">5</td>
+        <td>Única vez</td>
+        <td class="mono"><strong>$75,000</strong></td>
+        <td class="note">Solo 5 principales equipadas</td>
+      </tr>
+      <tr>
+        <td>Páginas web (15 sitios)</td>
+        <td class="mono">$0</td>
+        <td class="mono">15</td>
+        <td>Única vez</td>
+        <td class="mono"><strong>$0</strong></td>
+        <td class="note">Sin costo — desarrollo interno</td>
+      </tr>
+
+      <tr class="cat-hdr gn"><td colspan="6"><i class="ti ti-calendar-repeat" style="vertical-align:-2px; margin-right:6px"></i>B — Gastos mensuales recurrentes</td></tr>
+      <tr>
+        <td>Renta de oficina</td>
+        <td class="mono">~$10,750</td>
+        <td class="mono">15 oficinas</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$161,250/mes</strong></td>
+        <td class="note">Rango $9,500–$12,000 según plaza · 15 oficinas</td>
+      </tr>
+      <tr>
+        <td>Honorarios accionistas (2 por moral)</td>
+        <td class="mono">$1,500</td>
+        <td class="mono">20 personas</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$20,000/mes</strong></td>
+        <td class="note">2 accionistas × $1,500 × 10 morales</td>
+      </tr>
+      <tr>
+        <td>Luz (CFE)</td>
+        <td class="mono">$100</td>
+        <td class="mono">15 oficinas</td>
+        <td>Bimestral</td>
+        <td class="mono"><strong>$750/mes</strong></td>
+        <td class="note">$100 bimestral = $50/mes por oficina · 15 ofic.</td>
+      </tr>
+      <tr>
+        <td>Agua</td>
+        <td class="mono">$70</td>
+        <td class="mono">15 oficinas</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$1,050/mes</strong></td>
+        <td class="note"></td>
+      </tr>
+      <tr>
+        <td>Internet</td>
+        <td class="mono">$350</td>
+        <td class="mono">15 oficinas</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$5,250/mes</strong></td>
+        <td class="note"></td>
+      </tr>
+      <tr>
+        <td>IMSS patronal (2–4 trabajadores por entidad)</td>
+        <td class="mono">~$1,600</td>
+        <td class="mono">15 entidades</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$24,000/mes</strong></td>
+        <td class="note">Prom. 2–4 personas · $1,600–$2,000 por entidad · 15 entidades</td>
+      </tr>
+
+      <tr class="cat-hdr pr"><td colspan="6"><i class="ti ti-users" style="vertical-align:-2px; margin-right:6px"></i>C — Nómina equipo operativo central</td></tr>
+      <tr>
+        <td>Jefes de área (Conta · Fact · Tesorería · Materialidad)</td>
+        <td class="mono">$20,000</td>
+        <td class="mono">4</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$80,000/mes</strong></td>
+        <td class="note"></td>
+      </tr>
+      <tr>
+        <td>Operativos contabilidad / facturación / tesorería (6)</td>
+        <td class="mono">$12,000</td>
+        <td class="mono">6</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$72,000/mes</strong></td>
+        <td class="note"></td>
+      </tr>
+      <tr>
+        <td>Operativos materialidad (2)</td>
+        <td class="mono">$15,000</td>
+        <td class="mono">2</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$30,000/mes</strong></td>
+        <td class="note"></td>
+      </tr>
+      <tr>
+        <td>Agentes de seguridad (2)</td>
+        <td class="mono">$15,000</td>
+        <td class="mono">2</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$30,000/mes</strong></td>
+        <td class="note"></td>
+      </tr>
+
+      <tr class="cat-hdr" style="background:#fff3f3;"><td colspan="6" style="color:#a32d2d;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;padding:6px 14px;"><i class="ti ti-receipt-tax" style="vertical-align:-2px;margin-right:6px"></i>D — Impuestos mensuales por entidad (15 entidades)</td></tr>
+      <tr>
+        <td>Impuesto mensual — 5 morales principales</td>
+        <td class="mono">$10K–$20K</td>
+        <td class="mono">5</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$50K–$100K/mes</strong></td>
+        <td class="note">Rango según actividad · $10K min $20K máx</td>
+      </tr>
+      <tr>
+        <td>Impuesto mensual — 5 morales secundarias</td>
+        <td class="mono">$5K–$10K</td>
+        <td class="mono">5</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$25K–$50K/mes</strong></td>
+        <td class="note">Rango $5K–$10K por secundaria</td>
+      </tr>
+      <tr>
+        <td>Impuesto mensual — 5 personas físicas</td>
+        <td class="mono">$3,000</td>
+        <td class="mono">5</td>
+        <td>Mensual</td>
+        <td class="mono"><strong>$15,000/mes</strong></td>
+        <td class="note">Fijo $3K por persona física</td>
+      </tr>
+
+    </tbody>
+    <tfoot>
+      <tr class="warn">
+        <td colspan="4">Inversión inicial estimada (one-time)</td>
+        <td>~$235,000</td>
+        <td style="font-size:13px; color:var(--ink3); font-family:var(--font); font-weight:400">Constitución 10 morales + mobiliario 5 principales</td>
+      </tr>
+      <tr class="warn">
+        <td colspan="4">Gasto mensual sin impuestos (operación plena)</td>
+        <td>~$424,300/mes</td>
+        <td style="font-size:13px; color:var(--ink3); font-family:var(--font); font-weight:400">Renta + accionistas + servicios + IMSS + nómina completa</td>
+      </tr>
+      <tr class="warn">
+        <td colspan="4">Impuestos mensuales fijos (secundarias + físicas)</td>
+        <td>$52,500/mes</td>
+        <td style="font-size:13px; color:var(--ink3); font-family:var(--font); font-weight:400">5 sec. × $7.5K prom + 5 físicas × $3K = $52.5K fijo</td>
+      </tr>
+      <tr class="warn">
+        <td colspan="4">Impuestos principales (variable según actividad)</td>
+        <td>$50K–$100K/mes</td>
+        <td style="font-size:13px; color:var(--ink3); font-family:var(--font); font-weight:400">5 principales × $10K–$20K</td>
+      </tr>
+      <tr class="warn">
+        <td colspan="4">Gasto total mensual (impuestos prom. $127.5K)</td>
+        <td>~$551,800/mes</td>
+        <td style="font-size:13px; color:var(--ink3); font-family:var(--font); font-weight:400">Operación $424,300 + impuestos $127,500 prom.</td>
+      </tr>
+
+    </tfoot>
+  </table>
+  </div>
+  <p style="font-size:13px; color:var(--ink3); margin-top:8px; padding-left:4px;">* Cifras en MXN. El gasto escala gradualmente conforme se abren entidades.</p>
+
+  <!-- RIESGOS -->
+  <div class="sec-label"><i class="ti ti-alert-triangle" style="font-size:13px"></i> Riesgos y dependencias críticas</div>
+  <div class="risk-grid">
+    <div class="risk or">
+      <div class="risk-icon"><i class="ti ti-clock"></i></div>
+      <div class="risk-title">Tiempo notarial</div>
+      <div class="risk-body">RPC puede tardar más en EdoMéx y Tabasco. Prever 3–4 meses conservador. Iniciar batch 1 en julio sin demora.</div>
+    </div>
+    <div class="risk or">
+      <div class="risk-icon"><i class="ti ti-building-bank"></i></div>
+      <div class="risk-title">Apertura bancaria</div>
+      <div class="risk-body">Bancos demoran con empresas nuevas sin historial. Contactar ejecutivo corporativo desde julio para morales y físicas.</div>
+    </div>
+    <div class="risk bl">
+      <div class="risk-icon"><i class="ti ti-file-invoice"></i></div>
+      <div class="risk-title">Estructura fiscal</div>
+      <div class="risk-body">Definir objeto social y régimen antes de las altas. Físicas tienen restricciones distintas a las morales para facturación.</div>
+    </div>
+    <div class="risk pr">
+      <div class="risk-icon"><i class="ti ti-users"></i></div>
+      <div class="risk-title">Reclutamiento</div>
+      <div class="risk-body">Perfiles contables SAT/CFDI son escasos. Iniciar búsqueda en julio para arrancar en septiembre.</div>
+    </div>
+    <div class="risk gn">
+      <div class="risk-icon"><i class="ti ti-user-check"></i></div>
+      <div class="risk-title">Personas físicas</div>
+      <div class="risk-body">Revisar límites de facturación y obligaciones ISR/PTU de físicas con actividad empresarial antes de asignar operaciones.</div>
+    </div>
+    <div class="risk or">
+      <div class="risk-icon"><i class="ti ti-clipboard-check"></i></div>
+      <div class="risk-title">Trámites posteriores al alta SAT</div>
+      <div class="risk-body">Al tener domicilio y cuenta bancaria listos, contemplar: verificación de domicilio fiscal (visita SAT), trámite de REPSE si la entidad presta servicios especializados, y alta en padrones de proveedores/contratistas de los gobiernos con los que se vaya a contratar. Iniciar estos trámites en cuanto el RFC esté activo, ya que pueden tomar semanas adicionales antes de poder facturar a dependencias públicas.</div>
+    </div>
+  </div>
+
+  <!-- RENTABILIDAD -->
+  <div class="sec-label"><i class="ti ti-trending-up" style="font-size:13px"></i> Análisis de rentabilidad y punto de equilibrio</div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:16px;font-size:12.5px;color:var(--ink2);line-height:1.7;">
+    <strong>Modelo de ingresos:</strong> Las 5 morales principales facturan a clientes. Se cobra el <strong>4.5%</strong> sobre el monto facturado — <strong>1% se destina a impuestos y sueldos</strong> (cubre el gasto operativo del corporativo) y <strong>3.5% es utilidad neta</strong>. El gasto fijo total a cubrir (nómina + renta + servicios + IMSS + impuestos prom.) es <strong>~$551,800/mes</strong>.
+  </div>
+
+  <div class="budget-wrap" style="margin-bottom:20px;">
+  <table class="budget">
+    <thead>
+      <tr>
+        <th style="text-align:left;min-width:180px">Escenario</th>
+        <th>Facturación<br>mensual</th>
+        <th>4.5% comisión<br>total</th>
+        <th>Gasto fijo<br>+ impuestos</th>
+        <th>Utilidad<br>mensual</th>
+        <th style="text-align:left;min-width:120px">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="cat-hdr bl"><td colspan="6">Rango A — $10M a $20M MDP</td></tr>
+      <tr>
+        <td>$10M facturación</td>
+        <td class="mono">$10,000,000</td>
+        <td class="mono">$450,000</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--red)"><strong>−$101,800</strong></td>
+        <td style="font-size:13px;color:var(--red)">⚠ Pérdida</td>
+      </tr>
+      <tr>
+        <td>$12.3M facturación</td>
+        <td class="mono">$12,260,000</td>
+        <td class="mono">$551,700</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--orange)"><strong>≈ $0</strong></td>
+        <td style="font-size:13px;color:var(--orange)">↔ Punto de equilibrio</td>
+      </tr>
+      <tr>
+        <td>$15M facturación</td>
+        <td class="mono">$15,000,000</td>
+        <td class="mono">$675,000</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--green)"><strong>+$123,200</strong></td>
+        <td style="font-size:13px;color:var(--green)">✓ Superávit</td>
+      </tr>
+      <tr>
+        <td>$20M facturación</td>
+        <td class="mono">$20,000,000</td>
+        <td class="mono">$900,000</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--green)"><strong>+$348,200</strong></td>
+        <td style="font-size:13px;color:var(--green)">✓ Superávit</td>
+      </tr>
+
+      <tr class="cat-hdr gn"><td colspan="6">Rango B — $20M a $40M MDP</td></tr>
+      <tr>
+        <td>$25M facturación</td>
+        <td class="mono">$25,000,000</td>
+        <td class="mono">$1,125,000</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--green)"><strong>+$573,200</strong></td>
+        <td style="font-size:13px;color:var(--green)">✓ Superávit</td>
+      </tr>
+      <tr style="background:#f0f8f4;">
+        <td><strong>$30M facturación ★</strong></td>
+        <td class="mono"><strong>$30,000,000</strong></td>
+        <td class="mono"><strong>$1,350,000</strong></td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--green)"><strong>+$798,200</strong></td>
+        <td style="font-size:13px;color:var(--green);font-weight:600">★ Escenario base</td>
+      </tr>
+      <tr>
+        <td>$35M facturación</td>
+        <td class="mono">$35,000,000</td>
+        <td class="mono">$1,575,000</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--green)"><strong>+$1,023,200</strong></td>
+        <td style="font-size:13px;color:var(--green)">✓ Superávit</td>
+      </tr>
+      <tr>
+        <td>$40M facturación</td>
+        <td class="mono">$40,000,000</td>
+        <td class="mono">$1,800,000</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--green)"><strong>+$1,248,200</strong></td>
+        <td style="font-size:13px;color:var(--green)">✓ Superávit</td>
+      </tr>
+
+      <tr class="cat-hdr pr"><td colspan="6">Rango C — $40M a $60M MDP</td></tr>
+      <tr>
+        <td>$45M facturación</td>
+        <td class="mono">$45,000,000</td>
+        <td class="mono">$2,025,000</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--green)"><strong>+$1,473,200</strong></td>
+        <td style="font-size:13px;color:var(--green)">✓ Superávit</td>
+      </tr>
+      <tr>
+        <td>$50M facturación</td>
+        <td class="mono">$50,000,000</td>
+        <td class="mono">$2,250,000</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--green)"><strong>+$1,698,200</strong></td>
+        <td style="font-size:13px;color:var(--green)">✓ Superávit</td>
+      </tr>
+      <tr>
+        <td>$60M facturación</td>
+        <td class="mono">$60,000,000</td>
+        <td class="mono">$2,700,000</td>
+        <td class="mono">$551,800</td>
+        <td class="mono" style="color:var(--green)"><strong>+$2,148,200</strong></td>
+        <td style="font-size:13px;color:var(--green)">✓ Superávit</td>
+      </tr>
+
+    </tbody>
+    <tfoot>
+      <tr style="background:var(--surface2);">
+        <td colspan="2" style="font-family:var(--font);color:var(--ink2)"><strong>Punto de equilibrio</strong></td>
+        <td class="mono" style="color:var(--orange)">$551,800</td>
+        <td class="mono" style="color:var(--orange)">$551,800</td>
+        <td class="mono" style="color:var(--orange)">$0</td>
+        <td style="font-size:13px;color:var(--orange)">Facturación ~$12.3 MDP/mes</td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+
+  <!-- KPIs PE -->
+  <div class="kpi-grid" style="margin-bottom:8px;">
+    <div class="kpi orange">
+      <div class="kpi-label">Punto de equilibrio</div>
+      <div class="kpi-val">$12.3M</div>
+      <div class="kpi-sub">~$2.5M por moral · comisión 4.5%</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-label">★ Escenario base $30M</div>
+      <div class="kpi-val">+$798K</div>
+      <div class="kpi-sub">Mensual · ~$9.6M/año</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Con $40M/mes</div>
+      <div class="kpi-val">+$1.25M</div>
+      <div class="kpi-sub">Mensual · ~$15M/año</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-label">Con $60M/mes</div>
+      <div class="kpi-val">+$2.15M</div>
+      <div class="kpi-sub">Mensual · ~$25.8M/año</div>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--ink3);padding-left:4px;margin-top:6px;">* Comisión 4.5% sobre facturación: 1% destinado a impuestos y sueldos (cubre gasto operativo total $551,800/mes) y 3.5% es utilidad neta directa. Cifras antes de ISR corporativo adicional.</p>
+  <!-- RECUPERACIÓN DE INVERSIÓN -->
+  <div class="sec-label"><i class="ti ti-chart-line" style="font-size:13px"></i> Recuperación de inversión — escenario base $30 MDP/mes</div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:16px;font-size:12.5px;color:var(--ink2);line-height:1.7;">
+    <strong>Supuestos:</strong> Julio y agosto solo operan los 3 jefes (~$273,550/mes de gasto, sin operativos). En septiembre se incorpora el equipo completo y las físicas empiezan a facturar. Morales al 100% desde octubre. Escenario base <strong>$30 MDP/mes</strong> · comisión 4.5% = $1,350,000 · gasto fijo + impuestos $551,800 → <strong>utilidad mensual $798,200</strong>. El saldo de arranque se recupera en apenas ~2 meses de operación plena.
+  </div>
+
+  <div class="budget-wrap" style="margin-bottom:20px;">
+  <table class="budget">
+    <thead>
+      <tr>
+        <th style="text-align:left;min-width:110px">Mes</th>
+        <th>Gasto fijo<br>+ impuestos</th>
+        <th>Ingresos<br>(comisión 4.5%)</th>
+        <th>Resultado<br>del mes</th>
+        <th>Saldo<br>acumulado</th>
+        <th style="text-align:left">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat-hdr bl"><td colspan="6">Fase de arranque · julio–agosto solo 3 jefes</td></tr>
+      <tr>
+        <td><strong>Julio</strong></td>
+        <td class="mono">−$273,550</td>
+        <td class="mono">$0</td>
+        <td class="mono" style="color:var(--red)">−$273,550</td>
+        <td class="mono" style="color:var(--red)">−$508,550</td>
+        <td style="font-size:13px;color:var(--ink3)">Inversión $235K + solo 3 jefes mes 1</td>
+      </tr>
+      <tr>
+        <td><strong>Agosto</strong></td>
+        <td class="mono">−$273,550</td>
+        <td class="mono">$0</td>
+        <td class="mono" style="color:var(--red)">−$273,550</td>
+        <td class="mono" style="color:var(--red)">−$782,100</td>
+        <td style="font-size:13px;color:var(--ink3)">Constitución + infraestructura · solo jefes</td>
+      </tr>
+      <tr>
+        <td><strong>Septiembre</strong></td>
+        <td class="mono">−$551,800</td>
+        <td class="mono">+$360,000</td>
+        <td class="mono" style="color:var(--red)">−$191,800</td>
+        <td class="mono" style="color:var(--red)">−$973,900</td>
+        <td style="font-size:13px;color:var(--ink3)">Equipo completo + físicas arrancando (~$8M)</td>
+      </tr>
+
+      <tr class="cat-hdr gn"><td colspan="6">Operación plena · $30 MDP/mes · utilidad $798,200/mes</td></tr>
+      <tr>
+        <td><strong>Octubre</strong></td>
+        <td class="mono">−$551,800</td>
+        <td class="mono">+$1,350,000</td>
+        <td class="mono" style="color:var(--green)">+$798,200</td>
+        <td class="mono" style="color:var(--red)">−$175,700</td>
+        <td style="font-size:13px;color:var(--ink3)">Primer mes pleno · saldo casi recuperado</td>
+      </tr>
+      <tr>
+        <td><strong>Noviembre</strong></td>
+        <td class="mono">−$551,800</td>
+        <td class="mono">+$1,350,000</td>
+        <td class="mono" style="color:var(--green)">+$798,200</td>
+        <td class="mono" style="color:var(--green)"><strong>+$622,500</strong></td>
+        <td style="font-size:13px;color:var(--green);font-weight:600">✓ Inversión recuperada</td>
+      </tr>
+      <tr style="background:#f0f8f4;">
+        <td><strong>Diciembre</strong></td>
+        <td class="mono">−$551,800</td>
+        <td class="mono">+$1,350,000</td>
+        <td class="mono" style="color:var(--green)">+$798,200</td>
+        <td class="mono" style="color:var(--green)"><strong>+$1,420,700</strong></td>
+        <td style="font-size:13px;color:var(--green)">✓ Cerramos 2026 en positivo</td>
+      </tr>
+
+      <tr class="cat-hdr pr"><td colspan="6">Proyección 2027 — utilidad libre acumulada</td></tr>
+      <tr>
+        <td><strong>1er trim '27</strong></td>
+        <td class="mono">−$551,800</td>
+        <td class="mono">+$1,350,000</td>
+        <td class="mono" style="color:var(--green)">+$798,200 c/u</td>
+        <td class="mono" style="color:var(--green)">+$3,815,300</td>
+        <td style="font-size:13px;color:var(--green)">Acumulado a fin de marzo 2027</td>
+      </tr>
+      <tr>
+        <td><strong>Año completo '27</strong></td>
+        <td class="mono">−$551,800</td>
+        <td class="mono">+$1,350,000</td>
+        <td class="mono" style="color:var(--green)">+$9,578,400/año</td>
+        <td class="mono" style="color:var(--green)">+$10,599,100</td>
+        <td style="font-size:13px;color:var(--green)">Utilidad libre acumulada fin 2027</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr style="background:var(--blue-pale);">
+        <td colspan="2" style="font-family:var(--font);color:var(--blue)"><strong>Saldo total de arranque</strong></td>
+        <td class="mono" style="color:var(--blue)">$235K inversión</td>
+        <td class="mono" style="color:var(--blue)">= $782,100</td>
+        <td class="mono" style="color:var(--blue)"></td>
+        <td style="font-size:13px;color:var(--blue)">Menor gracias a equipo reducido en arranque</td>
+      </tr>
+      <tr style="background:var(--green-pale);">
+        <td colspan="2" style="font-family:var(--font);color:var(--green)"><strong>Recuperación completa</strong></td>
+        <td class="mono" style="color:var(--green)">+$798,200/mes</td>
+        <td class="mono" style="color:var(--green)">Noviembre 2026</td>
+        <td class="mono" style="color:var(--green)"></td>
+        <td style="font-size:13px;color:var(--green)">Diciembre ya cerramos con +$1.4M acumulado</td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+
+  <!-- KPIs recuperación -->
+  <div class="kpi-grid" style="margin-bottom:24px;">
+    <div class="kpi blue">
+      <div class="kpi-label">Saldo total arranque</div>
+      <div class="kpi-val">$782K</div>
+      <div class="kpi-sub">Inversión $235K + 2 meses solo jefes $547K</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Utilidad mensual</div>
+      <div class="kpi-val">$798,200</div>
+      <div class="kpi-sub">Con $30 MDP · comisión 4.5% · escenario base</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Recuperación total</div>
+      <div class="kpi-val">Nov 2026</div>
+      <div class="kpi-sub">Solo 2 meses de operación plena · muy eficiente</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-label">Cierre 2026</div>
+      <div class="kpi-val">+$1.42M</div>
+      <div class="kpi-sub">Saldo positivo acumulado al 31 de diciembre</div>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--ink3);padding-left:4px;margin-bottom:8px;">* Escenario base $30 MDP/mes con comisión 4.5% (1% impuestos/sueldos + 3.5% utilidad). El arranque con solo jefes en julio–agosto reduce el saldo inicial a $782K, lo que acelera la recuperación a noviembre 2026. Diciembre cerramos con +$1.4M acumulado.</p>
+
+  <footer>
+    <span>Elaborado: Junio 2026</span>
+    <span>Versión 2.0 — Confidencial</span>
+  </footer>
+
+</div>
+</body>
+</html>
